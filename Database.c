@@ -163,3 +163,45 @@ void insertCR(Database data, CR cr) {
         *(data.CRTable+hashval)= &cr;
     }
 }
+
+CSG *lookupCSG(Database data, char ***information, int switchin) {
+    switch(switchin) {  //0 is CSG, 1 is SNAP, 2 is CP, 3 is CDH, 4 is CR
+
+        case 0 :
+            int hashval=hashSID(csg.SID);
+            int temp = hashval;
+
+        case 1 :
+            int hashval=hashNotSID(snap.name);
+            int temp = hashval;
+
+        case 2 :
+            int hashval=hashNotSID(cp.course);
+            int temp = hashval;
+
+        case 3 :
+            int hashval=hashNotSID(cdh.course);
+            int temp = hashval;
+
+        case 4 :
+            int hashval=hashNotSID(cr.course);
+            int temp = hashval;
+
+    }
+
+
+
+    while (*(data.CSGTable+hashval)) {
+        if ((data.CSGTable+hashval)->SID==csg.SID &&
+        (strcmp((data.CSGTable+hashval)->course, csg.course)==0) &&
+        (strcmp((data.CSGTable+hashval)->course, csg.course)==0)) {
+            return (data.CSGTable+hashval);
+        }
+        hashval++;
+        hashval=hashval%61;
+        if (hashval==temp) {
+            perror("hashtable full");
+            return;
+        }
+    }
+}
