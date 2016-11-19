@@ -45,6 +45,12 @@ Database *createDatabase() {
     return PDatabase;
 }
 
+void insertToDBFromFile(Database db, char *filename) {
+    FILE *fp;
+    fp = fopen(filename, "r");
+    if (fp == NULL) perror("Can't Open File");
+}
+
 void insertCSG(Database data, CSG csg) {
     int hashval=hashSID(csg.SID);
     int temp = hashval;
@@ -53,7 +59,7 @@ void insertCSG(Database data, CSG csg) {
         hashval=hashval%61;
         if (hashval==temp) {
         perror("hashtable full");
-        return;    
+        return;
     }
     if (*(data.CSGTable+hashval)) {
         *(data.CSGTable+hashval)= &csg;
@@ -68,7 +74,7 @@ void insertSNAP(Database data, SNAP snap) {
         hashval=hashval%61;
         if (hashval==temp) {
         perror("hashtable full");
-        return;    
+        return;
     }
     if (*(data.SNAPTable+hashval)) {
         *(data.SNAPTable+hashval)= &snap;
@@ -82,7 +88,7 @@ void insertCP(Database data, CP cp) {
         hashval=hashval%61;
         if (hashval==temp) {
         perror("hashtable full");
-        return;    
+        return;
     }
     if (*(data.CPTable+hashval)) {
         *(data.CPTable+hashval)= &cp;
@@ -96,7 +102,7 @@ void insertCDH(Database data, CDH cdh) {
         hashval=hashval%61;
         if (hashval==temp) {
         perror("hashtable full");
-        return;    
+        return;
     }
     if (*(data.CDHTable+hashval)) {
         *(data.CDHTable+hashval)= &cdh;
@@ -110,7 +116,7 @@ void insertCR(Database data, CR cr) {
         hashval=hashval%61;
         if (hashval==temp) {
         perror("hashtable full");
-        return;    
+        return;
     }
     if (*(data.CRTable+hashval)) {
         *(data.CRTable+hashval)= &cr;

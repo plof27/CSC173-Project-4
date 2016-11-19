@@ -17,9 +17,12 @@ typedef struct {
 Database *createDatabase();
 int hashSID(int);
 int hashString(char *);
+void printDB(Database);     //~write later
+void saveDBToFile(char *);  //~write later
 
 //inserting
-//~master insert works somehow
+void insertToDBFromCLI(Database);   //write later~
+void insertToDBFromFile(Database, char *);
 void insertCSG(Database, CSG);
 void insertSNAP(Database, SNAP);
 void insertCP(Database, CP);
