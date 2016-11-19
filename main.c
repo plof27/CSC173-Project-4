@@ -9,5 +9,8 @@ int main(int argc, char const *argv[]) {
     CDH test = *(createCDH("CS101", "M", "9AM"));
     insertCDH(db, test);
 
+    insertToDBFromFile(db, "test1.txt");
+    insertToDBFromFile(db, "test2.txt");
+
     return 0;
 }
