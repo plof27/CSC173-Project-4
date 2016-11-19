@@ -6,6 +6,7 @@
 #define MAX_ROOM_LENGTH 20
 
 #include <stdlib.h>
+#include <stdio.h>
 
 //define structs for each relation
 
@@ -45,6 +46,7 @@ CP CPTable[61];
 CDH CDHTable[61];
 CR CRTable[61];
 
-
+int hashSID(int);
+int hashString(char *);
 
 #endif
