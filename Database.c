@@ -54,7 +54,7 @@ void insertToDBFromFile(Database db, char *filename) {
 void insertCSG(Database data, CSG csg) {
     int hashval=hashSID(csg.SID);
     int temp = hashval;
-    while (!(*(data.CSGTable+hashval))) {
+    while ((*(data.CSGTable+hashval))) {
         hashval++;
         hashval=hashval%61;
         if (hashval==temp) {
@@ -70,7 +70,7 @@ void insertCSG(Database data, CSG csg) {
 void insertSNAP(Database data, SNAP snap) {
     int hashval=hashNotSID(snap.name);
     int temp = hashval;
-    while (!(*(data.SNAPTable+hashval))) {
+    while ((*(data.SNAPTable+hashval))) {
         hashval++;
         hashval=hashval%61;
         if (hashval==temp) {
@@ -85,7 +85,7 @@ void insertSNAP(Database data, SNAP snap) {
 void insertCP(Database data, CP cp) {
     int hashval=hashNotSID(cp.course);
     int temp = hashval;
-    while (!(*(data.CPTable+hashval))) {
+    while ((*(data.CPTable+hashval))) {
         hashval++;
         hashval=hashval%61;
         if (hashval==temp) {
@@ -100,7 +100,7 @@ void insertCP(Database data, CP cp) {
 void insertCDH(Database data, CDH cdh) {
     int hashval=hashNotSID(cdh.course);
     int temp = hashval;
-    while (!(*(data.CDHTable+hashval))) {
+    while ((*(data.CDHTable+hashval))) {
         hashval++;
         hashval=hashval%61;
         if (hashval==temp) {
@@ -115,7 +115,7 @@ void insertCDH(Database data, CDH cdh) {
 void insertCR(Database data, CR cr) {
     int hashval=hashNotSID(cr.course);
     int temp = hashval;
-    while (!(*(data.CRTable+hashval))) {
+    while ((*(data.CRTable+hashval))) {
         hashval++;
         hashval=hashval%61;
         if (hashval==temp) {
