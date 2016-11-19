@@ -2,10 +2,12 @@
 #include <stdlib.h>
 #include "Database.h"
 
-
 int main(int argc, char const *argv[]) {
 
     Database db = *createDatabase();
+
+    CDH test = *(createCDH("CS101", "M", "9AM"));
+    insertCDH(db, test);
 
     return 0;
 }
