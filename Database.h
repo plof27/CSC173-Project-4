@@ -14,8 +14,16 @@ typedef struct {
 } Database;
 
 //function prototypes
+Database *createDatabase();
 int hashSID(int);
 int hashString(char *);
-//insert
+
+//inserting
+//~master insert works somehow
+void insertCSG(CSG);
+void insertSNAP(SNAP);
+void insertCP(CP);
+void insertCDH(CDH);
+void insertCR(CR);
 
 #endif
