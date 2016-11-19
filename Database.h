@@ -1,10 +1,6 @@
 #ifndef LAW_DATABASE
 #define LAW_DATABASE
 
-#define MAX_NAME_LENGTH 10
-#define MAX_ADDRESS_LENGTH 20
-#define MAX_ROOM_LENGTH 20
-
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -12,32 +8,32 @@
 
 //Course, SID, Grade
 typedef struct {
-    char course[6];
+    char *course;
     int SID;
-    char grade[3];
+    char *grade;
 } CSG;
 //SID, Name, Address, Phone
 typedef struct {
     int SID;
-    char name[MAX_NAME_LENGTH+1];
-    char address[MAX_ADDRESS_LENGTH+1];
+    char *name8;
+    char *address;
     int phone;
 } SNAP;
 //Course, Prerequisite
 typedef struct {
-    char course[6];
-    char prereq[6];
+    char *course;
+    char *prereq;
 } CP;
 //Course, Day, Hour
 typedef struct {
-    char course[6];
-    char day[3];
-    char hour[5];
+    char *course;
+    char *day;
+    char *hour;
 } CDH;
 //Course, Room
 typedef struct {
-    char course[6];
-    char room[MAX_ROOM_LENGTH+1];
+    char *course;
+    char *room;
 } CR;
 
 CSG CSGTable[61];
@@ -46,7 +42,14 @@ CP CPTable[61];
 CDH CDHTable[61];
 CR CRTable[61];
 
+CSG *createCSG(char *, int, char *);
+SNAP *createSNAP(int, char *, char *, int);
+CP *createCP(char *, char *);
+CDH *createCDH(char *, char *, char *);
+CR *createCR(char *, char *);
+
 int hashSID(int);
 int hashString(char *);
+//insert
 
 #endif
