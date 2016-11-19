@@ -25,12 +25,12 @@ CSG *createCSG(char *course, int SID, char *grade) {
     return CSGP;
 }
 
-SNAP *createSNAP(int SID, char *Name, char *address, char *Phone) {
+SNAP *createSNAP(int SID, char *name, char *address, int phone) {
     SNAP *SNAPP = malloc(sizeof(SNAP));
     SNAPP->SID = SID;
-    SNAPP->name = Name;
+    SNAPP->name = name;
     SNAPP->address = address;
-    SNAPP->phone = Phone;
+    SNAPP->phone = phone;
 
     return SNAPP;
 }
@@ -38,7 +38,7 @@ SNAP *createSNAP(int SID, char *Name, char *address, char *Phone) {
 CP *createCP(char *C, char *P) {
     CP *CPP = malloc(sizeof(CP));
     CPP->course = C;
-    CPP->phone = P;
+    CPP->prereq = P;
 
     return CPP;
 }

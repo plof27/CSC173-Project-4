@@ -15,7 +15,7 @@ typedef struct {
 //SID, Name, Address, Phone
 typedef struct {
     int SID;
-    char *name8;
+    char *name;
     char *address;
     int phone;
 } SNAP;
