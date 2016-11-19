@@ -6,11 +6,11 @@
 #include "Tuples.h"
 
 typedef struct {
-    CSG CSGTable[61];
-    SNAP SNAPTable[61];
-    CP CPTable[61];
-    CDH CDHTable[61];
-    CR CRTable[61];
+    CSG *CSGTable;
+    SNAP *SNAPTable;
+    CP *CPTable;
+    CDH *CDHTable;
+    CR *CRTable;
 } Database;
 
 //function prototypes
