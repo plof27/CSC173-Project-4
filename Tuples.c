@@ -28,6 +28,7 @@ CP *createCP(char *C, char *P) {
     return CPP;
 }
 
+
 CDH *createCDH(char *C, char *D, char *H) {
     CDH *CDHP = malloc(sizeof(CDH));
     CDHP->course = C;
