@@ -13,19 +13,6 @@ int hashNotSID(char *course) {
     return i % 61;
 }
 
-
-int hashString(char *string) {
-    int i = 0;
-    int sum = 0;
-    while (*(string+i) != '\0') {
-        char c = *(string+i);
-
-        sum += (int)c;
-        i++;
-    }
-    return sum % 61;
-}
-
 CSG *createCSG(char *course, int SID, char *grade) {
     CSG *CSGP = malloc(sizeof(CSG));
     CSGP->course = course;
