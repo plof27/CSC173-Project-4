@@ -171,37 +171,141 @@ CSG *lookupCSG(Database data, char ***information, int switchin) {
             int hashval=hashSID(csg.SID);
             int temp = hashval;
 
+            while (*(data.CSGTable+hashval)) {
+                if (
+                (strcmp((data.CSGTable+hashval)->course, *(*(information)+0)==0)) &&
+                (strcmp((itoa(data.CSGTable+hashval)->SID), *(*(information)+1)==0)) &&
+                (strcmp((data.CSGTable+hashval)->grade, *(*(information)+2)==0))) {
+                    return (data.CSGTable+hashval);
+                }
+                else if (
+                ((strcmp((data.CSGTable+hashval)->course, *(*(information)+0))==0)||(strcmp((data.CSGTable+hashval)->course, "*")==0)) &&
+                ((strcmp((itoa(data.CSGTable+hashval)->SID), *(*(information)+1))==0)||(strcmp(itoa((data.CSGTable+hashval)->SID), "*")==0)) &&
+                ((strcmp((data.CSGTable+hashval)->grade, *(*(information)+2))==0)||(strcmp((data.CSGTable+hashval)->grade, "*")==0))) {
+                    ADD (data.CSGTable+hashval) to XX;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                }
+                hashval++;
+                hashval=hashval%61;
+                if (hashval==temp) {
+                    if (*XX=='\0') {~~~~~~~~~
+                        perror("not contained");
+                        return;
+                    }
+                    return XX;~~~~~~~~~
+                }
+            }
+
         case 1 :
             int hashval=hashNotSID(snap.name);
             int temp = hashval;
 
+            while (*(data.SNAPTable+hashval)) {
+                if (
+                (strcmp(itoa((data.SNAPTable+hashval)->SID), *(*(information)+0)==0)) &&
+                (strcmp((data.SNAPTable+hashval)->name, *(*(information)+1)==0)) &&
+                (strcmp((data.SNAPTable+hashval)->address, *(*(information)+2)==0))&&
+                (strcmp((data.SNAPTable+hashval)->phone, *(*(information)+3)==0))) {
+                    return (data.SNAPTable+hashval);
+                }
+                else if (
+                ((strcmp(itoa((data.SNAPTable+hashval)->SID), *(*(information)+0))==0)||(strcmp(itoa((data.SNAPTable+hashval)->SID), "*")==0)) &&
+                ((strcmp((data.SNAPTable+hashval)->name, *(*(information)+1))==0)||(strcmp((data.SNAPTable+hashval)->name, "*")==0)) &&
+                ((strcmp((data.SNAPTable+hashval)->address, *(*(information)+2))==0)||(strcmp((data.SNAPTable+hashval)->address, "*")==0)) &&
+                ((strcmp(itoa((data.SNAPTable+hashval)->phone), *(*(information)+2))==0)||(strcmp(itoa((data.SNAPTable+hashval)->phone), "*")==0))) {
+                    ADD (data.SNAPTable+hashval) to XX;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                }
+                hashval++;
+                hashval=hashval%61;
+                if (hashval==temp) {
+                    if (*XX=='\0') {~~~~~~~~~
+                        perror("not contained");
+                        return;
+                    }
+                    return XX;~~~~~~~~~
+                }
+            }
         case 2 :
             int hashval=hashNotSID(cp.course);
             int temp = hashval;
+
+            while (*(data.CPTable+hashval)) {
+                if (
+                (strcmp((data.CPTable+hashval)->course, *(*(information)+0)==0)) &&
+                (strcmp((data.CPTable+hashval)->prereq, *(*(information)+1)==0))) {
+                    return (data.CPTable+hashval);
+                }
+                else if (
+                ((strcmp((data.CPTable+hashval)->course, *(*(information)+0))==0)||(strcmp((data.CPTable+hashval)->course, "*")==0)) &&
+                ((strcmp((data.CPTable+hashval)->prereq, *(*(information)+1))==0)||(strcmp((data.CPTable+hashval)->prereq, "*")==0))) {
+                    ADD (data.CPTable+hashval) to XX;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                }
+                hashval++;
+                hashval=hashval%61;
+                if (hashval==temp) {
+                    if (*XX=='\0') {~~~~~~~~~
+                        perror("not contained");
+                        return;
+                    }
+                    return XX;~~~~~~~~~
+                }
+            }
 
         case 3 :
             int hashval=hashNotSID(cdh.course);
             int temp = hashval;
 
+            while (*(data.CDHTable+hashval)) {
+                if (
+                (strcmp((data.CDHTable+hashval)->course, *(*(information)+0)==0)) &&
+                (strcmp((data.CDHTable+hashval)->day, *(*(information)+1)==0)) &&
+                (strcmp((data.CDHTable+hashval)->hour, *(*(information)+2)==0))) {
+                    return (data.CDHTable+hashval);
+                }
+                else if (
+                ((strcmp((data.CDHTable+hashval)->course, *(*(information)+0))==0)||(strcmp((data.CDHTable+hashval)->course, "*")==0)) &&
+                ((strcmp((data.CDHTable+hashval)->day, *(*(information)+1))==0)||(strcmp((data.CDHTable+hashval)->day, "*")==0)) &&
+                ((strcmp((data.CDHTable+hashval)->hour, *(*(information)+2))==0)||(strcmp((data.CDHTable+hashval)->hour, "*")==0))) {
+                    ADD (data.CDHTable+hashval) to XX;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                }
+                hashval++;
+                hashval=hashval%61;
+                if (hashval==temp) {
+                    if (*XX=='\0') {~~~~~~~~~
+                        perror("not contained");
+                        return;
+                    }
+                    return XX;~~~~~~~~~
+                }
+            }
+
         case 4 :
             int hashval=hashNotSID(cr.course);
             int temp = hashval;
 
+            while (*(data.CRTable+hashval)) {
+                if (
+                (strcmp((data.CRTable+hashval)->course, *(*(information)+0)==0)) &&
+                (strcmp((data.CRTable+hashval)->room, *(*(information)+1)==0))) {
+                    return (data.CRTable+hashval);
+                }
+                else if (
+                ((strcmp((data.CRTable+hashval)->course, *(*(information)+0))==0)||(strcmp((data.CRTable+hashval)->course, "*")==0)) &&
+                ((strcmp((data.CRTable+hashval)->room, *(*(information)+1))==0)||(strcmp((data.CRTable+hashval)->room, "*")==0))) {
+                    ADD (data.CRTable+hashval) to XX;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                }
+                hashval++;
+                hashval=hashval%61;
+                if (hashval==temp) {
+                    if (*XX=='\0') {~~~~~~~~~
+                        perror("not contained");
+                        return;
+                    }
+                    return XX;~~~~~~~~~
+                }
+            }
     }
 
 
 
-    while (*(data.CSGTable+hashval)) {
-        if ((data.CSGTable+hashval)->SID==csg.SID &&
-        (strcmp((data.CSGTable+hashval)->course, csg.course)==0) &&
-        (strcmp((data.CSGTable+hashval)->course, csg.course)==0)) {
-            return (data.CSGTable+hashval);
-        }
-        hashval++;
-        hashval=hashval%61;
-        if (hashval==temp) {
-            perror("hashtable full");
-            return;
-        }
-    }
+
 }

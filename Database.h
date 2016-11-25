@@ -14,6 +14,8 @@ typedef struct {
     CR **CRTable;
 } Database;
 
+
+
 //function prototypes
 Database *createDatabase();
 int hashSID(int);
