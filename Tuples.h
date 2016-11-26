@@ -56,6 +56,7 @@ CR *createCR(char *, char *);
 //comparison functions. Checks that the CSG matches the given specification
 int cmpCSG(CSG, char ***);
 int cmpSNAP(SNAP, char ***);
+
 int cmpCP(CP, char ***);
 int cmpCDH(CDH, char ***);
 int cmpCR(CR, char ***);
