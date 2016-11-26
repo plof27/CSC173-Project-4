@@ -66,10 +66,10 @@ void insertToDBFromFile(Database db, char *filename) {
 
             if (strcmp(token, "CSG") == 0) {
                 //insert to CSG
-                insertCSG(db, *(createCSG(strtok(NULL, "\t"), strtok(NULL, "\t"), strtok(NULL, "\t"))));
+                insertCSG(db, *(createCSG(strtok(NULL, "\t"), atoi(strtok(NULL, "\t")), strtok(NULL, "\t"))));
             } else if (strcmp(token, "SNAP") == 0) {
                 //insert to SNAP
-                insertSNAP(db, *(createSNAP(strtok(NULL, "\t"), strtok(NULL, "\t"), strtok(NULL, "\t"), strtok(NULL, "\t"))));
+                insertSNAP(db, *(createSNAP(atoi(strtok(NULL, "\t")), strtok(NULL, "\t"), strtok(NULL, "\t"), atoi(strtok(NULL, "\t")))));
             } else if (strcmp(token, "CP") == 0) {
                 //insert to CP
                 insertCP(db, *(createCP(strtok(NULL, "\t"), strtok(NULL, "\t"))));
