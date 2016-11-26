@@ -441,7 +441,7 @@ SNAP *lookupCP(Database data, char ***spec) {
             while(current) {
                 if (cmpCP(*current, spec) == 0) {
                     //info match! insert to retval!
-                    CP *new = createCP(current->SID, current->name, current->address, current->phone);
+                    CP *new = createCP(current->course, current->prereq);
                     new->next = retval;
                     retval = new;
                 }
