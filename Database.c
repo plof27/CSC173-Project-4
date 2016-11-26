@@ -66,19 +66,33 @@ void insertToDBFromFile(Database db, char *filename) {
 
             if (strcmp(token, "CSG") == 0) {
                 //insert to CSG
-                insertCSG(db, *(createCSG(strtok(NULL, "\t"), atoi(strtok(NULL, "\t")), strtok(NULL, "\t"))));
+                char *course = strtok(NULL, "\t");
+                int SID = atoi(strtok(NULL, "\t"));
+                char *grade = strtok(NULL, "\t");
+                insertCSG(db, *(createCSG(course, SID, grade)));
             } else if (strcmp(token, "SNAP") == 0) {
                 //insert to SNAP
-                insertSNAP(db, *(createSNAP(atoi(strtok(NULL, "\t")), strtok(NULL, "\t"), strtok(NULL, "\t"), atoi(strtok(NULL, "\t")))));
+                int SID = atoi(strtok(NULL, "\t"));
+                char *name = strtok(NULL, "\t");
+                char *address = strtok(NULL, "\t");
+                int phone = atoi(strtok(NULL, "\t"));
+                insertSNAP(db, *(createSNAP(SID, name, address, phone)));
             } else if (strcmp(token, "CP") == 0) {
                 //insert to CP
-                insertCP(db, *(createCP(strtok(NULL, "\t"), strtok(NULL, "\t"))));
+                char *course = strtok(NULL, "\t");
+                char *prereq = strtok(NULL, "\t");
+                insertCP(db, *(createCP(course, prereq)));
             } else if (strcmp(token, "CDH") == 0) {
                 //insert to CDH
-                insertCDH(db, *(createCDH(strtok(NULL, "\t"), strtok(NULL, "\t"), strtok(NULL, "\t"))));
+                char *course = strtok(NULL, "\t");
+                char *day = strtok(NULL, "\t");
+                char *hour = strtok(NULL, "\t");
+                insertCDH(db, *(createCDH(course, day, hour)));
             } else if (strcmp(token, "CR") == 0) {
                 //insert to CR
-                insertCR(db, *(createCR(strtok(NULL, "\t"), strtok(NULL, "\t"))));
+                char *course = strtok(NULL, "\t");
+                char *room = strtok(NULL, "\t");
+                insertCR(db, *(createCR(course, room)));
             } else {
                 perror("Uknown Relation");
             }
