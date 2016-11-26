@@ -158,8 +158,10 @@ void insertCR(Database data, CR cr) {
 }
 
 /*
-CSG *lookupCSG(Database data, char ***information, int switchin) {
+CSG *lookup(Database data, char ***information, int switchin) {
     switch(switchin) {  //0 is CSG, 1 is SNAP, 2 is CP, 3 is CDH, 4 is CR
+
+
 
         case 0 :
             int hashval=hashSID(csg.SID);
@@ -364,6 +366,55 @@ CSG *lookupCSG(Database data, char ***spec) {
                 if (cmpCSG(*current, spec) == 0) {
                     //info match! insert to retval!
                     CSG *new = createCSG(current->course, current->SID, current->grade);
+                    new->next = retval;
+                    retval = new;
+                }
+                current = current->next;
+            }
+        }
+        return retval;
+    }
+}
+
+SNAP *lookupSNAP(Database data, char ***spec) {
+
+    //spec is an array of memory containing pointers to strings. Ideally, spec should be formatted such that each sring is a value to be queried
+    if (strcmp("*", *(*(spec+1))) != 0) {
+        //an SID was given! Hash on that shit!
+        int hashval = hashNotSID(**(spec+1));
+
+        if (*(data.SNAPTable+hashval)) {
+            //something is here! build list of matches!
+            SNAP *current = *(data.SNAPTable+hashval);
+            SNAP *retval = NULL;
+
+            //check that the all information actually matches
+            while(current) {
+                if (cmpSNAP(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    SNAP *new = createSNAP(current->SID, current->name, current->address, current->phone);
+                    new->next = retval;
+                    retval = new;
+                }
+                current = current->next;
+            }
+
+            return retval;
+        } else {
+            //nothing here! return NULL!
+            return NULL;
+        }
+    } else {
+        //no SID given, iterate over table and find matches
+        SNAP *retval = NULL;
+        int i;
+        for (i = 0; i < 61; i++) {
+            SNAP *current = *(data.SNAPTable+i);
+            //start checking elements in bucket i, add to retval if appropriate.
+            while(current) {
+                if (cmpSNAP(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    SNAP *new = createSNAP(current->SID, current->name, current->address, current->phone);
                     new->next = retval;
                     retval = new;
                 }

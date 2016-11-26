@@ -71,3 +71,14 @@ int cmpCSG(CSG csg, char ***spec) {
         return 1;
     }
 }
+
+int cmpSNAP(SNAP snap, char ***spec) {
+    if ((strcmp("*", *(*(spec+0))) == 0 || strcmp(snap.SID, atoi(*(*(spec+0)))) == 0) &&
+    (strcmp("*", *(*(spec+1))) == 0 || snap.name == *(*(spec+1))) &&
+    (strcmp("*", *(*(spec+2))) == 0 || strcmp(csg.address, *(*(spec+2))))&&
+    (strcmp("*", *(*(spec+3))) == 0 || strcmp(csg.phone, *(*(spec+3))))) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
