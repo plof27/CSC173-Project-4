@@ -93,8 +93,8 @@ void insertCSG(Database data, CSG csg) {
     if (*(data.CSGTable+hashval)) {
         //something is here! insert!
         CSG *temp = *(data.CSGTable+hashval);
-        csg.next = temp;
         *(data.CSGTable+hashval) = createCSG(csg.course, csg.SID, csg.grade);
+        (*(data.CSGTable+hashval))->next = temp;
     } else {
         //empty space!
         *(data.CSGTable+hashval) = createCSG(csg.course, csg.SID, csg.grade);
@@ -326,10 +326,11 @@ char ***createSpec(char *s1, char *s2, char *s3, char *s4) {
 }
 
 CSG *lookupCSG(Database data, char ***spec) {
+
     //spec is an array of memory containing pointers to strings. Ideally, spec should be formatted such that each sring is a value to be queried
     if (strcmp("*", *(*(spec+1))) != 0) {
         //an SID was given! Hash on that shit!
-        int hashval = hashSID(atoi(**spec));
+        int hashval = hashSID(atoi(**(spec+1)));
 
         if (*(data.CSGTable+hashval)) {
             //something is here! build list of matches!
@@ -337,7 +338,7 @@ CSG *lookupCSG(Database data, char ***spec) {
             CSG *retval = NULL;
 
             //check that the all information actually matches
-            while(current->next) {
+            while(current) {
                 if (cmpCSG(*current, spec) == 0) {
                     //info match! insert to retval!
                     CSG *new = createCSG(current->course, current->SID, current->grade);
@@ -359,7 +360,7 @@ CSG *lookupCSG(Database data, char ***spec) {
         for (i = 0; i < 61; i++) {
             CSG *current = *(data.CSGTable+i);
             //start checking elements in bucket i, add to retval if appropriate.
-            while(current->next) {
+            while(current) {
                 if (cmpCSG(*current, spec) == 0) {
                     //info match! insert to retval!
                     CSG *new = createCSG(current->course, current->SID, current->grade);
