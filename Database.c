@@ -323,11 +323,6 @@ char ***createSpec(char *s1, char *s2, char *s3, char *s4) {
     strncpy(**(spec+2), s3, 100);
     strncpy(**(spec+3), s4, 100);
 
-    printf("%s\n", **(spec+0));
-    printf("%s\n", **(spec+1));
-    printf("%s\n", **(spec+2));
-    printf("%s\n", **(spec+3));
-
     return spec;
 }
 
