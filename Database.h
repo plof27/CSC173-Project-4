@@ -36,5 +36,9 @@ char ***createSpec(char *, char *, char *, char *); //creates a specification fr
 
 //lookup
 CSG *lookupCSG(Database, char ***);
+SNAP *lookupSNAP(Database, char ***);
+CP *lookupCP(Database, char ***);
+CDH *lookupCDH(Database, char ***);
+CR *lookupCR(Database, char ***);
 
 #endif
