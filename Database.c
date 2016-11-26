@@ -88,82 +88,77 @@ void insertToDBFromFile(Database db, char *filename) {
 }
 
 void insertCSG(Database data, CSG csg) {
+    //may need to pass csg by refrence... not sure.
     int hashval=hashSID(csg.SID);
-    int temp = hashval;
-    while ((*(data.CSGTable+hashval))) {
-        hashval++;
-        hashval=hashval%61;
-        if (hashval==temp) {
-            perror("hashtable full");
-            return;
-        }
-    }
+
     if (*(data.CSGTable+hashval)) {
-        *(data.CSGTable+hashval)= &csg;
+        //something is here! insert!
+        CSG *temp = *(data.CSGTable+hashval);
+        csg.next = temp;
+        *(data.CSGTable+hashval) = &csg;
+    } else {
+        //empty space!
+        *(data.CSGTable+hashval) = &csg;
     }
 }
 
 void insertSNAP(Database data, SNAP snap) {
     int hashval=hashNotSID(snap.name);
-    int temp = hashval;
-    while ((*(data.SNAPTable+hashval))) {
-        hashval++;
-        hashval=hashval%61;
-        if (hashval==temp) {
-            perror("hashtable full");
-            return;
-        }
-    }
+
     if (*(data.SNAPTable+hashval)) {
-        *(data.SNAPTable+hashval)= &snap;
-    }
-}
-void insertCP(Database data, CP cp) {
-    int hashval=hashNotSID(cp.course);
-    int temp = hashval;
-    while ((*(data.CPTable+hashval))) {
-        hashval++;
-        hashval=hashval%61;
-        if (hashval==temp) {
-            perror("hashtable full");
-            return;
-        }
-    }
-    if (*(data.CPTable+hashval)) {
-        *(data.CPTable+hashval)= &cp;
-    }
-}
-void insertCDH(Database data, CDH cdh) {
-    int hashval=hashNotSID(cdh.course);
-    int temp = hashval;
-    while ((*(data.CDHTable+hashval))) {
-        hashval++;
-        hashval=hashval%61;
-        if (hashval==temp) {
-            perror("hashtable full");
-            return;
-        }
-    }
-    if (*(data.CDHTable+hashval)) {
-        *(data.CDHTable+hashval)= &cdh;
-    }
-}
-void insertCR(Database data, CR cr) {
-    int hashval=hashNotSID(cr.course);
-    int temp = hashval;
-    while ((*(data.CRTable+hashval))) {
-        hashval++;
-        hashval=hashval%61;
-        if (hashval==temp) {
-            perror("hashtable full");
-            return;
-        }
-    }
-    if (*(data.CRTable+hashval)) {
-        *(data.CRTable+hashval)= &cr;
+        //something is here! insert!
+        SNAP *temp = *(data.SNAPTable+hashval);
+        snap.next = temp;
+        *(data.SNAPTable+hashval) = &snap;
+    } else {
+        //empty space!
+        *(data.SNAPTable+hashval) = &snap;
     }
 }
 
+void insertCP(Database data, CP cp) {
+    int hashval=hashNotSID(cp.course);
+
+    if (*(data.CPTable+hashval)) {
+        //something is here! insert!
+        CP *temp = *(data.CPTable+hashval);
+        cp.next = temp;
+        *(data.CPTable+hashval) = &cp;
+    } else {
+        //empty space!
+        *(data.CPTable+hashval) = &cp;
+    }
+}
+
+void insertCDH(Database data, CDH cdh) {
+    int hashval=hashNotSID(cdh.course);
+
+    if (*(data.CDHTable+hashval)) {
+        //something is here! insert!
+        CDH *temp = *(data.CDHTable+hashval);
+        cdh.next = temp;
+        *(data.CDHTable+hashval) = &cdh;
+    } else {
+        //empty space!
+        *(data.CDHTable+hashval) = &cdh;
+    }
+}
+
+void insertCR(Database data, CR cr) {
+    int hashval=hashNotSID(cr.course);
+
+    if (*(data.CRTable+hashval)) {
+        //something is here! insert!
+        CR *temp = *(data.CRTable+hashval);
+        cr.next = temp;
+        *(data.CRTable+hashval) = &cr;
+    } else {
+        //empty space!
+        *(data.CRTable+hashval) = &cr;
+    }
+}
+
+/*
 CSG *lookupCSG(Database data, char ***information, int switchin) {
     switch(switchin) {  //0 is CSG, 1 is SNAP, 2 is CP, 3 is CDH, 4 is CR
 
@@ -309,3 +304,4 @@ CSG *lookupCSG(Database data, char ***information, int switchin) {
 
 
 }
+*/
