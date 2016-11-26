@@ -307,22 +307,26 @@ CSG *lookupCSG(Database data, char ***information, int switchin) {
 */
 
 char ***createSpec(char *s1, char *s2, char *s3, char *s4) {
-    char ***spec = malloc(sizeof(char **)*3);
+    char ***spec = malloc(sizeof(char **)*4);
+    *(spec+0) = malloc(sizeof(char *));
+    *(spec+1) = malloc(sizeof(char *));
+    *(spec+2) = malloc(sizeof(char *));
+    *(spec+3) = malloc(sizeof(char *));
 
-    char *buf1 = malloc(sizeof(char)*100);
-    char *buf2 = malloc(sizeof(char)*100);
-    char *buf3 = malloc(sizeof(char)*100);
-    char *buf4 = malloc(sizeof(char)*100);
+    **(spec+0) = malloc(sizeof(char)*100);
+    **(spec+1) = malloc(sizeof(char)*100);
+    **(spec+2) = malloc(sizeof(char)*100);
+    **(spec+3) = malloc(sizeof(char)*100);
 
-    fgets(buf1, 100, s4);
-    fgets(buf2, 100, s4);
-    fgets(buf3, 100, s4);
-    fgets(buf4, 100, s4);
+    strncpy(**(spec+0), s1, 100);
+    strncpy(**(spec+1), s2, 100);
+    strncpy(**(spec+2), s3, 100);
+    strncpy(**(spec+3), s4, 100);
 
-    *(spec+0) = &buf1;
-    *(spec+1) = &buf2;
-    *(spec+2) = &buf3;
-    *(spec+3) = &buf4;
+    printf("%s\n", **(spec+0));
+    printf("%s\n", **(spec+1));
+    printf("%s\n", **(spec+2));
+    printf("%s\n", **(spec+3));
 
     return spec;
 }
