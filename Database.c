@@ -306,6 +306,27 @@ CSG *lookupCSG(Database data, char ***information, int switchin) {
 }
 */
 
+char ***createSpec(char *s1, char *s2, char *s3, char *s4) {
+    char ***spec = malloc(sizeof(char **)*3);
+
+    char *buf1 = malloc(sizeof(char)*100);
+    char *buf2 = malloc(sizeof(char)*100);
+    char *buf3 = malloc(sizeof(char)*100);
+    char *buf4 = malloc(sizeof(char)*100);
+
+    fgets(buf1, 100, s4);
+    fgets(buf2, 100, s4);
+    fgets(buf3, 100, s4);
+    fgets(buf4, 100, s4);
+
+    *(spec+0) = &buf1;
+    *(spec+1) = &buf2;
+    *(spec+2) = &buf3;
+    *(spec+3) = &buf4;
+
+    return spec;
+}
+
 CSG *lookupCSG(Database data, char ***spec) {
     //spec is an array of memory containing pointers to strings. Ideally, spec should be formatted such that each sring is a value to be queried
     if (strcmp("*", *(*(spec+1))) != 0) {

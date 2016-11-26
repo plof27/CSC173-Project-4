@@ -32,7 +32,9 @@ void insertCP(Database, CP);
 void insertCDH(Database, CDH);
 void insertCR(Database, CR);
 
+char ***createSpec(char *, char *, char *, char *); //creates a specification from the strings given
+
 //lookup
-CSG *lookupCSG(Database, CSG);
+CSG *lookupCSG(Database, char ***);
 
 #endif
