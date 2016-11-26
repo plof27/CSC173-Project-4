@@ -7,34 +7,39 @@
 //define structs for each relation
 
 //Course, SID, Grade
-typedef struct {
+struct CSG {
     char *course;
     int SID;
     char *grade;
-} CSG;
+    CSG *next;
+};
 //SID, Name, Address, Phone
-typedef struct {
+struct SNAP {
     int SID;
     char *name;
     char *address;
     int phone;
-} SNAP;
+    SNAP *next;
+};
 //Course, Prerequisite
-typedef struct {
+struct CP {
     char *course;
     char *prereq;
-} CP;
+    CP *next;
+};
 //Course, Day, Hour
-typedef struct {
+struct CDH {
     char *course;
     char *day;
     char *hour;
-} CDH;
+    CDH *next;
+};
 //Course, Room
-typedef struct {
+struct CR {
     char *course;
     char *room;
-} CR;
+    CR *next;
+};
 
 //function prototypes
 CSG *createCSG(char *, int, char *);

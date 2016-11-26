@@ -31,6 +31,8 @@ void insertSNAP(Database, SNAP);
 void insertCP(Database, CP);
 void insertCDH(Database, CDH);
 void insertCR(Database, CR);
+
+//lookup
 CSG *lookupCSG(Database, CSG);
 
 #endif
