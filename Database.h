@@ -35,6 +35,7 @@ void insertCR(Database, CR);
 char ***createSpec(char *, char *, char *, char *); //creates a specification from the strings given
 
 //lookup
+void lookup(Database, char ***, char *);
 CSG *lookupCSG(Database, char ***);
 SNAP *lookupSNAP(Database, char ***);
 CP *lookupCP(Database, char ***);

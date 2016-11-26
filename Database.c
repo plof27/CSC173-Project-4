@@ -325,6 +325,71 @@ char ***createSpec(char *s1, char *s2, char *s3, char *s4) {
     return spec;
 }
 
+void lookup(Database data, char ***spec, char *rel) {
+    if (strcmp("CSG", rel) == 0) {
+        CSG *results = lookupCSG(data, spec);
+
+        printf("%s", "Results:");
+        if (!results) printf("%s", "Nothing Found!");
+        printf("\n");
+        while(results) {
+            printf("Course: %s\n", results->course);
+            printf("SID: %d\n", results->SID);
+            printf("Grade: %s\n", results->grade);
+            results = results->next;
+        }
+    } else if (strcmp("SNAP", rel) == 0) {
+        SNAP *results = lookupSNAP(data, spec);
+
+        printf("%s", "Results:");
+        if (!results) printf("%s", "Nothing Found!");
+        printf("\n");
+        while(results) {
+            printf("SID: %d\n", results->SID);
+            printf("Name: %s\n", results->name);
+            printf("Address: %s\n", results->address);
+            printf("Phone: %d\n", results->phone);
+            results = results->next;
+        }
+    } else if (strcmp("CP", rel) == 0) {
+        CP *results = lookupCP(data, spec);
+
+        printf("%s", "Results:");
+        if (!results) printf("%s", "Nothing Found!");
+        printf("\n");
+        while(results) {
+            printf("Course: %s\n", results->course);
+            printf("Prerequisite: %s\n", results->prereq);
+            results = results->next;
+        }
+    } else if (strcmp("CDH", rel) == 0) {
+        CDH *results = lookupCDH(data, spec);
+
+        printf("%s", "Results:");
+        if (!results) printf("%s", "Nothing Found!");
+        printf("\n");
+        while(results) {
+            printf("Course: %s\n", results->course);
+            printf("SID: %s\n", results->day);
+            printf("Grade: %s\n", results->hour);
+            results = results->next;
+        }
+    } else if (strcmp("CR", rel) == 0) {
+        CR *results = lookupCR(data, spec);
+
+        printf("%s", "Results:");
+        if (!results) printf("%s", "Nothing Found!");
+        printf("\n");
+        while(results) {
+            printf("Course: %s\n", results->course);
+            printf("Grade: %s\n", results->room);
+            results = results->next;
+        }
+    } else {
+        printf("Unknown Relation: %s\n", rel);
+    }
+}
+
 CSG *lookupCSG(Database data, char ***spec) {
 
     //spec is an array of memory containing pointers to strings. Ideally, spec should be formatted such that each sring is a value to be queried
