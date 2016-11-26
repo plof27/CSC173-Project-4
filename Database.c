@@ -425,7 +425,7 @@ SNAP *lookupSNAP(Database data, char ***spec) {
     }
 }
 
-SNAP *lookupCP(Database data, char ***spec) {
+CP *lookupCP(Database data, char ***spec) {
 
     //spec is an array of memory containing pointers to strings. Ideally, spec should be formatted such that each sring is a value to be queried
     if (strcmp("*", *(*(spec+0))) != 0) {
