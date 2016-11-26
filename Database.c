@@ -538,3 +538,101 @@ CP *lookupCP(Database data, char ***spec) {
         return retval;
     }
 }
+
+CDH *lookupCDH(Database data, char ***spec) {
+
+    //spec is an array of memory containing pointers to strings. Ideally, spec should be formatted such that each sring is a value to be queried
+    if (strcmp("*", *(*(spec+0))) != 0) {
+        //an SID was given! Hash on that shit!
+        int hashval = hashNotSID(**(spec+0));
+
+        if (*(data.CDHTable+hashval)) {
+            //something is here! build list of matches!
+            CDH *current = *(data.CDHTable+hashval);
+            CDH *retval = NULL;
+
+            //check that the all information actually matches
+            while(current) {
+                if (cmpCDH(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    CDH *new = createCDH(current->course, current->day, current->hour);
+                    new->next = retval;
+                    retval = new;
+                }
+                current = current->next;
+            }
+
+            return retval;
+        } else {
+            //nothing here! return NULL!
+            return NULL;
+        }
+    } else {
+        //no SID given, iterate over table and find matches
+        CDH *retval = NULL;
+        int i;
+        for (i = 0; i < 61; i++) {
+            CDH *current = *(data.CDHTable+i);
+            //start checking elements in bucket i, add to retval if appropriate.
+            while(current) {
+                if (cmpCDH(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    CDH *new = createCDH(current->course, current->day, current->hour);
+                    new->next = retval;
+                    retval = new;
+                }
+                current = current->next;
+            }
+        }
+        return retval;
+    }
+}
+
+CR *lookupCR(Database data, char ***spec) {
+
+    //spec is an array of memory containing pointers to strings. Ideally, spec should be formatted such that each sring is a value to be queried
+    if (strcmp("*", *(*(spec+0))) != 0) {
+        //an SID was given! Hash on that shit!
+        int hashval = hashNotSID(**(spec+0));
+
+        if (*(data.CRTable+hashval)) {
+            //something is here! build list of matches!
+            CR *current = *(data.CRTable+hashval);
+            CR *retval = NULL;
+
+            //check that the all information actually matches
+            while(current) {
+                if (cmpCR(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    CR *new = createCR(current->course, current->room);
+                    new->next = retval;
+                    retval = new;
+                }
+                current = current->next;
+            }
+
+            return retval;
+        } else {
+            //nothing here! return NULL!
+            return NULL;
+        }
+    } else {
+        //no SID given, iterate over table and find matches
+        CR *retval = NULL;
+        int i;
+        for (i = 0; i < 61; i++) {
+            CR *current = *(data.CRTable+i);
+            //start checking elements in bucket i, add to retval if appropriate.
+            while(current) {
+                if (cmpCR(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    CR *new = createCR(current->course, current->room);
+                    new->next = retval;
+                    retval = new;
+                }
+                current = current->next;
+            }
+        }
+        return retval;
+    }
+}
