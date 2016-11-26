@@ -424,3 +424,52 @@ SNAP *lookupSNAP(Database data, char ***spec) {
         return retval;
     }
 }
+
+SNAP *lookupCP(Database data, char ***spec) {
+
+    //spec is an array of memory containing pointers to strings. Ideally, spec should be formatted such that each sring is a value to be queried
+    if (strcmp("*", *(*(spec+0))) != 0) {
+        //an SID was given! Hash on that shit!
+        int hashval = hashNotSID(**(spec+0));
+
+        if (*(data.CPTable+hashval)) {
+            //something is here! build list of matches!
+            CP *current = *(data.CPTable+hashval);
+            CP *retval = NULL;
+
+            //check that the all information actually matches
+            while(current) {
+                if (cmpCP(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    CP *new = createCP(current->SID, current->name, current->address, current->phone);
+                    new->next = retval;
+                    retval = new;
+                }
+                current = current->next;
+            }
+
+            return retval;
+        } else {
+            //nothing here! return NULL!
+            return NULL;
+        }
+    } else {
+        //no SID given, iterate over table and find matches
+        CP *retval = NULL;
+        int i;
+        for (i = 0; i < 61; i++) {
+            CP *current = *(data.CPTable+i);
+            //start checking elements in bucket i, add to retval if appropriate.
+            while(current) {
+                if (cmpCP(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    CP *new = createCP(current->course, current->prereq);
+                    new->next = retval;
+                    retval = new;
+                }
+                current = current->next;
+            }
+        }
+        return retval;
+    }
+}
