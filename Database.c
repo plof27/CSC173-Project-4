@@ -88,17 +88,16 @@ void insertToDBFromFile(Database db, char *filename) {
 }
 
 void insertCSG(Database data, CSG csg) {
-    //may need to pass csg by refrence... not sure.
     int hashval=hashSID(csg.SID);
 
     if (*(data.CSGTable+hashval)) {
         //something is here! insert!
         CSG *temp = *(data.CSGTable+hashval);
         csg.next = temp;
-        *(data.CSGTable+hashval) = &csg;
+        *(data.CSGTable+hashval) = createCSG(csg.course, csg.SID, csg.grade);
     } else {
         //empty space!
-        *(data.CSGTable+hashval) = &csg;
+        *(data.CSGTable+hashval) = createCSG(csg.course, csg.SID, csg.grade);
     }
 }
 
@@ -109,10 +108,10 @@ void insertSNAP(Database data, SNAP snap) {
         //something is here! insert!
         SNAP *temp = *(data.SNAPTable+hashval);
         snap.next = temp;
-        *(data.SNAPTable+hashval) = &snap;
+        *(data.SNAPTable+hashval) = createSNAP(snap.SID, snap.name, snap.address, snap.phone);
     } else {
         //empty space!
-        *(data.SNAPTable+hashval) = &snap;
+        *(data.SNAPTable+hashval) = createSNAP(snap.SID, snap.name, snap.address, snap.phone);
     }
 }
 
@@ -123,10 +122,10 @@ void insertCP(Database data, CP cp) {
         //something is here! insert!
         CP *temp = *(data.CPTable+hashval);
         cp.next = temp;
-        *(data.CPTable+hashval) = &cp;
+        *(data.CPTable+hashval) = createCP(cp.course, cp.prereq);
     } else {
         //empty space!
-        *(data.CPTable+hashval) = &cp;
+        *(data.CPTable+hashval) = createCP(cp.course, cp.prereq);
     }
 }
 
@@ -137,10 +136,10 @@ void insertCDH(Database data, CDH cdh) {
         //something is here! insert!
         CDH *temp = *(data.CDHTable+hashval);
         cdh.next = temp;
-        *(data.CDHTable+hashval) = &cdh;
+        *(data.CDHTable+hashval) = createCDH(cdh.course, cdh.day, cdh.hour);
     } else {
         //empty space!
-        *(data.CDHTable+hashval) = &cdh;
+        *(data.CDHTable+hashval) = createCDH(cdh.course, cdh.day, cdh.hour);
     }
 }
 
@@ -151,10 +150,10 @@ void insertCR(Database data, CR cr) {
         //something is here! insert!
         CR *temp = *(data.CRTable+hashval);
         cr.next = temp;
-        *(data.CRTable+hashval) = &cr;
+        *(data.CRTable+hashval) = createCR(cr.course, cr.room);
     } else {
         //empty space!
-        *(data.CRTable+hashval) = &cr;
+        *(data.CRTable+hashval) = createCR(cr.course, cr.room);
     }
 }
 
