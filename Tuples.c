@@ -93,9 +93,9 @@ int cmpCP(CP cp, char ***spec) {
 }
 
 int cmpCDH(CDH cdh, char ***spec) {
-    if ((strcmp("*", *(*(spec+0))) == 0 || strcmp(cp.course, *(*(spec+0))) == 0) &&
-    (strcmp("*", *(*(spec+1))) == 0 || strcmp(cp.day, *(*(spec+1))) == 0) &&
-    (strcmp("*", *(*(spec+2))) == 0 || strcmp(cp.hour, *(*(spec+2))) == 0)) {
+    if ((strcmp("*", *(*(spec+0))) == 0 || strcmp(cdh.course, *(*(spec+0))) == 0) &&
+    (strcmp("*", *(*(spec+1))) == 0 || strcmp(cdh.day, *(*(spec+1))) == 0) &&
+    (strcmp("*", *(*(spec+2))) == 0 || strcmp(cdh.hour, *(*(spec+2))) == 0)) {
         return 0;
     } else {
         return 1;
@@ -103,8 +103,8 @@ int cmpCDH(CDH cdh, char ***spec) {
 }
 
 int cmpCR(CR cr, char ***spec) {
-    if ((strcmp("*", *(*(spec+0))) == 0 || strcmp(cp.course, *(*(spec+0))) == 0) &&
-    (strcmp("*", *(*(spec+1))) == 0 || strcmp(cp.day, *(*(spec+1))) == 0)) {
+    if ((strcmp("*", *(*(spec+0))) == 0 || strcmp(cr.course, *(*(spec+0))) == 0) &&
+    (strcmp("*", *(*(spec+1))) == 0 || strcmp(cr.room, *(*(spec+1))) == 0)) {
         return 0;
     } else {
         return 1;
