@@ -305,3 +305,51 @@ CSG *lookupCSG(Database data, char ***information, int switchin) {
 
 }
 */
+
+CSG *lookupCSG(Database data, char ***spec) {
+    //spec is an array of memory containing pointers to strings. Ideally, spec should be formatted such that each sring is a value to be queried
+    if (strcmp("*", *(*(spec+1))) != 0) {
+        //an SID was given! Hash on that shit!
+        int hashval = hashSID(atoi(**spec));
+
+        if (*(data.CSGTable+hashval)) {
+            //something is here! build list of matches!
+            CSG *current = *(data.CSGTable+hashval);
+            CSG *retval = NULL;
+
+            //check that the all information actually matches
+            while(current->next) {
+                if (cmpCSG(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    CSG *new = createCSG(current->course, current->SID, current->grade);
+                    new->next = retval;
+                    retval = new;
+                }
+                current = current->next;
+            }
+
+            return retval;
+        } else {
+            //nothing here! return NULL!
+            return NULL;
+        }
+    } else {
+        //no SID given, iterate over table and find matches
+        CSG *retval = NULL;
+        int i;
+        for (i = 0; i < 61; i++) {
+            CSG *current = *(data.CSGTable+i);
+            //start checking elements in bucket i, add to retval if appropriate.
+            while(current->next) {
+                if (cmpCSG(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    CSG *new = createCSG(current->course, current->SID, current->grade);
+                    new->next = retval;
+                    retval = new;
+                }
+                current = current->next;
+            }
+        }
+        return retval;
+    }
+}
