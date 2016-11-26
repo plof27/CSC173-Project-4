@@ -51,7 +51,7 @@ CR *createCR(char *C, char *R) {
     return CRP;
 }
 
-int CSGcmp(CSG csg, char ***spec) {
+int cmpCSG(CSG csg, char ***spec) {
     if ((strcmp("*", *(*(spec+0))) == 0 || strcmp(current->course, *(*(spec+0))) == 0) &&
     (strcmp("*", *(*(spec+1))) == 0 || current->SID == atoi(*(*(spec+1)))) &&
     (strcmp("*", *(*(spec+2))) == 0 || strcmp(current->grade, *(*(spec+2))))) {

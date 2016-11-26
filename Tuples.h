@@ -54,7 +54,7 @@ CDH *createCDH(char *, char *, char *);
 CR *createCR(char *, char *);
 
 //comparison functions. Checks that the CSG matches the given specification
-int CSGcmp(CSG, char ***);
+int cmpCSG(CSG, char ***);
 //~write the rest
 
 #endif
