@@ -19,7 +19,7 @@ typedef struct {
 //function prototypes
 Database *createDatabase();
 int hashSID(int);
-int hashString(char *);
+int hashNotSID(char *);
 void printDB(Database);     //~write later
 void saveDBToFile(char *);  //~write later
 
