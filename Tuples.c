@@ -65,7 +65,46 @@ CR *createCR(char *C, char *R) {
 int cmpCSG(CSG csg, char ***spec) {
     if ((strcmp("*", *(*(spec+0))) == 0 || strcmp(csg.course, *(*(spec+0))) == 0) &&
     (strcmp("*", *(*(spec+1))) == 0 || csg.SID == atoi(*(*(spec+1)))) &&
-    (strcmp("*", *(*(spec+2))) == 0 || strcmp(csg.grade, *(*(spec+2))))) {
+    (strcmp("*", *(*(spec+2))) == 0 || strcmp(csg.grade, *(*(spec+2))) == 0)) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
+int cmpSNAP(SNAP snap, char ***spec) {
+    if ((strcmp("*", *(*(spec+0))) == 0 || snap.SID == atoi(*(*(spec+0)))) &&
+    (strcmp("*", *(*(spec+1))) == 0 || strcmp(snap.name, *(*(spec+1))) == 0) &&
+    (strcmp("*", *(*(spec+2))) == 0 || strcmp(snap.address, *(*(spec+2))) == 0) &&
+    (strcmp("*", *(*(spec+3))) == 0 || snap.phone == atoi(*(*(spec+3))))) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
+int cmpCP(CP cp, char ***spec) {
+    if ((strcmp("*", *(*(spec+0))) == 0 || strcmp(cp.course, *(*(spec+0))) == 0) &&
+    (strcmp("*", *(*(spec+1))) == 0 || strcmp(cp.prereq, *(*(spec+1))) == 0)) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
+int cmpCDH(CDH cdh, char ***spec) {
+    if ((strcmp("*", *(*(spec+0))) == 0 || strcmp(cdh.course, *(*(spec+0))) == 0) &&
+    (strcmp("*", *(*(spec+1))) == 0 || strcmp(cdh.day, *(*(spec+1))) == 0) &&
+    (strcmp("*", *(*(spec+2))) == 0 || strcmp(cdh.hour, *(*(spec+2))) == 0)) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
+int cmpCR(CR cr, char ***spec) {
+    if ((strcmp("*", *(*(spec+0))) == 0 || strcmp(cr.course, *(*(spec+0))) == 0) &&
+    (strcmp("*", *(*(spec+1))) == 0 || strcmp(cr.room, *(*(spec+1))) == 0)) {
         return 0;
     } else {
         return 1;
