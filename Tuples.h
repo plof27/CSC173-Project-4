@@ -11,35 +11,40 @@ struct CSG {
     char *course;
     int SID;
     char *grade;
-    CSG *next;
+    struct CSG *next;
 };
+typedef struct CSG CSG;
 //SID, Name, Address, Phone
 struct SNAP {
     int SID;
     char *name;
     char *address;
     int phone;
-    SNAP *next;
+    struct SNAP *next;
 };
+typedef struct SNAP SNAP;
 //Course, Prerequisite
 struct CP {
     char *course;
     char *prereq;
-    CP *next;
+    struct CP *next;
 };
+typedef struct CP CP;
 //Course, Day, Hour
 struct CDH {
     char *course;
     char *day;
     char *hour;
-    CDH *next;
+    struct CDH *next;
 };
+typedef struct CDH CDH;
 //Course, Room
 struct CR {
     char *course;
     char *room;
-    CR *next;
+    struct CR *next;
 };
+typedef struct CR CR;
 
 //function prototypes
 CSG *createCSG(char *, int, char *);
