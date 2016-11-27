@@ -33,7 +33,7 @@ void saveDBToFile(Database db, char *filename) {
         }
         //save SNAPTable
         for (i=0; i<61; i++) {
-            SNAP *current = *(db.CSGTable+i);
+            SNAP *current = *(db.SNAPTable+i);
             while (current) {
                 fprintf(fp, "SNAP\t%d\t%s\t%s\t%d\n", current->SID, current->name, current->address, current->phone);
                 current = current->next;
@@ -41,7 +41,7 @@ void saveDBToFile(Database db, char *filename) {
         }
         //save CPtable
         for (i=0; i<61; i++) {
-            CP *current = *(db.CSGTable+i);
+            CP *current = *(db.CPTable+i);
             while (current) {
                 fprintf(fp, "CP\t%s\t%s\n", current->course, current->prereq);
                 current = current->next;
@@ -49,7 +49,7 @@ void saveDBToFile(Database db, char *filename) {
         }
         //save CDHTable
         for (i=0; i<61; i++) {
-            CDH *current = *(db.CSGTable+i);
+            CDH *current = *(db.CDHTable+i);
             while (current) {
                 fprintf(fp, "CDH\t%s\t%s\t%s\n", current->course, current->day, current->hour);
                 current = current->next;
@@ -57,7 +57,7 @@ void saveDBToFile(Database db, char *filename) {
         }
         //save CRTable
         for (i=0; i<61; i++) {
-            CR *current = *(db.CSGTable+i);
+            CR *current = *(db.CRTable+i);
             while (current) {
                 fprintf(fp, "CR\t%s\t%s\n", current->course, current->room);
                 current = current->next;
@@ -1118,7 +1118,7 @@ void unionDB(Database data1, Database data2, char *rel) {
                     int flag = 1;
                     while (current1) {
                         char buf[6];
-                        itoa(current2->SID, buf, 10);
+                        sprintf(buf,"%d",current2->SID);
                         if (cmpCSG((*current1), createSpec(current2->course, buf, current2->grade, "*")) == 0) {
                             flag = 0;
                         }
@@ -1149,9 +1149,9 @@ void unionDB(Database data1, Database data2, char *rel) {
                     int flag = 1;
                     while (current1) {
                         char buf1[6];
-                        itoa(current2->SID, buf1, 10);
+                        sprintf(buf1,"%d",current2->SID);
                         char buf2[8];
-                        itoa(current2->phone, buf2, 10);
+                        sprintf(buf2,"%d",current2->phone);
                         if (cmpSNAP((*current1), createSpec(buf1, current2->name, current2->address, buf2)) == 0) {
                             flag = 0;
                         }
@@ -1270,7 +1270,7 @@ void intersectDB(Database data1, Database data2, char *rel) {
             //start checking elements in bucket i, delete from data1 if appropriate.
             while(current1) {
                 char buf[6];
-                itoa(current1->SID, buf, 10);
+                sprintf(buf,"%d",current1->SID);
                 CSG *lookup = lookupCSG(data2, createSpec(current1->course, buf, current1->grade, "*"));
                 if (!lookup) {
                     deleteCSG(data1, createSpec(current1->course, buf, current1->grade, "*"));
@@ -1285,9 +1285,9 @@ void intersectDB(Database data1, Database data2, char *rel) {
             //start checking elements in bucket i, delete from data1 if appropriate.
             while(current1) {
                 char buf1[6];
-                itoa(current1->SID, buf1, 10);
+                sprintf(buf1,"%d",current1->SID);
                 char buf2[8];
-                itoa(current1->phone, buf2, 10);
+                sprintf(buf2,"%d",current1->phone);
                 SNAP *lookup = lookupSNAP(data2, createSpec(buf1, current1->name, current1->address, buf2));
                 if (!lookup) {
                     deleteSNAP(data1, createSpec(buf1, current1->name, current1->address, buf2));
@@ -1347,7 +1347,7 @@ void differenceDB(Database data1, Database data2, char *rel) {
             //start checking elements in bucket i, delete from data1 if appropriate.
             while(current2) {
                 char buf[6];
-                itoa(current2->SID, buf, 10);
+                sprintf(buf,"%d",current2->SID);
                 deleteCSG(data1, createSpec(current2->course, buf, current2->grade, "*"));
                 current2 = current2->next;
             }
@@ -1359,9 +1359,9 @@ void differenceDB(Database data1, Database data2, char *rel) {
             //start checking elements in bucket i, delete from data1 if appropriate.
             while(current2) {
                 char buf1[6];
-                itoa(current2->SID, buf1, 10);
+                sprintf(buf1,"%d",current2->SID);
                 char buf2[8];
-                itoa(current2->phone, buf2, 10);
+                sprintf(buf2,"%d",current2->phone);
                 deleteSNAP(data1, createSpec(buf1, current2->name, current2->address, buf2));
                 current2 = current2->next;
             }

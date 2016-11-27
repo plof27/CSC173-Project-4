@@ -1,0 +1,55 @@
+Results:
+Course: CS101
+SID: 12345
+Grade: A
+Next: 0x7fa8d0408420
+Course: CS102
+SID: 12345
+Grade: A-
+Next: 0x7fa8d0408320
+Course: EE200
+SID: 12345
+Grade: C
+Next: 0x0
+==================================
+Results:
+Course: CS101
+SID: 67890
+Grade: B
+Next: 0x7fa8d0408b40
+Course: CS101
+SID: 33333
+Grade: A-
+Next: 0x7fa8d0408a40
+Course: CS101
+SID: 12345
+Grade: A
+Next: 0x7fa8d0408940
+Course: CS101
+SID: 12406
+Grade: C-
+Next: 0x7fa8d0408840
+Course: CS101
+SID: 11111
+Grade: C
+Next: 0x0
+==========DELETING============
+Results:
+Course: CS101
+SID: 33333
+Grade: A-
+Next: 0x7fa8d0409290
+Course: CS101
+SID: 12345
+Grade: A
+Next: 0x7fa8d0409190
+Course: CS101
+SID: 12406
+Grade: C-
+Next: 0x7fa8d0404b30
+Course: CS101
+SID: 11111
+Grade: C
+Next: 0x0
+C. Brown got a A in CS101
+C. Brown is in 25 Ohm Hall at 10AM on Tu
