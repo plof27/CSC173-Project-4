@@ -741,7 +741,7 @@ void deleteCSG(Database data, char ***spec) {
                     if (prev == *(data.CSGTable+hashval)) {
                         *(data.CSGTable+hashval) = current->next;
                     } else {
-                        prev->next = current->next;;
+                        prev->next = current->next;
                     }
 
                     current = current->next;
@@ -769,7 +769,7 @@ void deleteCSG(Database data, char ***spec) {
                     if (prev == *(data.CSGTable+i)) {
                         *(data.CSGTable+i) = current->next;
                     } else {
-                        prev->next = current->next;;
+                        prev->next = current->next;
                     }
 
                     current = current->next;
@@ -795,17 +795,28 @@ void deleteSNAP(Database data, char ***spec) {
         if (*(data.SNAPTable+hashval)) {
             //something is here! build list of matches!
             SNAP *current = *(data.SNAPTable+hashval);
-            SNAP *prev = *(data.CSGTable+hashval);
+            SNAP *prev = *(data.SNAPTable+hashval);
 
             //check that the all information actually matches
             while(current) {
                 if (cmpSNAP(*current, spec) == 0) {
                     //info match! insert to retval!
-                    prev->next=current->next;
-                    free(current);
-                    current=prev->next;
+                    SNAP *deleted = current;
+
+                    if (prev == *(data.SNAPTable+hashval)) {
+                        *(data.SNAPTable+hashval) = current->next;
+                    } else {
+                        prev->next = current->next;
+                    }
+
+                    current = current->next;
+                    free(deleted->name);
+                    free(deleted->address);
+                    free(deleted);
+                } else {
+                    if (current != *(data.SNAPTable+hashval)) prev = prev->next;
+                    current = current->next;
                 }
-                current = current->next;
             }
         }
     } else {
@@ -813,16 +824,27 @@ void deleteSNAP(Database data, char ***spec) {
         int i;
         for (i = 0; i < 61; i++) {
             SNAP *current = *(data.SNAPTable+i);
-            SNAP *prev = *(data.CSGTable+i);
+            SNAP *prev = *(data.SNAPTable+i);
             //start checking elements in bucket i, add to retval if appropriate.
             while(current) {
                 if (cmpSNAP(*current, spec) == 0) {
                     //info match! insert to retval!
-                    prev->next=current->next;
-                    free(current);
-                    current=prev->next;
+                    SNAP *deleted = current;
+
+                    if (prev == *(data.SNAPTable+i)) {
+                        *(data.SNAPTable+i) = current->next;
+                    } else {
+                        prev->next = current->next;
+                    }
+
+                    current = current->next;
+                    free(deleted->name);
+                    free(deleted->address);
+                    free(deleted);
+                } else {
+                    if (current != *(data.SNAPTable+i)) prev = prev->next;
+                    current = current->next;
                 }
-                current = current->next;
             }
         }
     }
@@ -838,17 +860,28 @@ void deleteCP(Database data, char ***spec) {
         if (*(data.CPTable+hashval)) {
             //something is here! build list of matches!
             CP *current = *(data.CPTable+hashval);
-            CP *prev = *(data.CSGTable+hashval);
+            CP *prev = *(data.CPTable+hashval);
 
             //check that the all information actually matches
             while(current) {
                 if (cmpCP(*current, spec) == 0) {
                     //info match! insert to retval!
-                    prev->next=current->next;
-                    free(current);
-                    current=prev->next;
+                    CP *deleted = current;
+
+                    if (prev == *(data.CPTable+hashval)) {
+                        *(data.CPTable+hashval) = current->next;
+                    } else {
+                        prev->next = current->next;
+                    }
+
+                    current = current->next;
+                    free(deleted->course);
+                    free(deleted->prereq);
+                    free(deleted);
+                } else {
+                    if (current != *(data.CPTable+hashval)) prev = prev->next;
+                    current = current->next;
                 }
-                current = current->next;
             }
         }
     } else {
@@ -856,16 +889,27 @@ void deleteCP(Database data, char ***spec) {
         int i;
         for (i = 0; i < 61; i++) {
             CP *current = *(data.CPTable+i);
-            CP *prev = *(data.CSGTable+i);
+            CP *prev = *(data.CPTable+i);
             //start checking elements in bucket i, add to retval if appropriate.
             while(current) {
                 if (cmpCP(*current, spec) == 0) {
                     //info match! insert to retval!
-                    prev->next=current->next;
-                    free(current);
-                    current=prev->next;
+                    CP *deleted = current;
+
+                    if (prev == *(data.CPTable+i)) {
+                        *(data.CPTable+i) = current->next;
+                    } else {
+                        prev->next = current->next;
+                    }
+
+                    current = current->next;
+                    free(deleted->course);
+                    free(deleted->prereq);
+                    free(deleted);
+                } else {
+                    if (current != *(data.CPTable+i)) prev = prev->next;
+                    current = current->next;
                 }
-                current = current->next;
             }
         }
     }
@@ -881,16 +925,29 @@ void deleteCDH(Database data, char ***spec) {
         if (*(data.CDHTable+hashval)) {
             //something is here! build list of matches!
             CDH *current = *(data.CDHTable+hashval);
-            CDH *prev = *(data.CSGTable+hashval);
+            CDH *prev = *(data.CDHTable+hashval);
 
             //check that the all information actually matches
             while(current) {
                 if (cmpCDH(*current, spec) == 0) {
-                    //info match! insert to retvavoid                    prev->next=current->next;
-                    free(current);
-                    current=prev->next;
+                    //info match! insert to retval!
+                    CDH *deleted = current;
+
+                    if (prev == *(data.CDHTable+hashval)) {
+                        *(data.CDHTable+hashval) = current->next;
+                    } else {
+                        prev->next = current->next;
+                    }
+
+                    current = current->next;
+                    free(deleted->course);
+                    free(deleted->day);
+                    free(deleted->hour);
+                    free(deleted);
+                } else {
+                    if (current != *(data.CDHTable+hashval)) prev = prev->next;
+                    current = current->next;
                 }
-                current = current->next;
             }
         }
     } else {
@@ -898,16 +955,28 @@ void deleteCDH(Database data, char ***spec) {
         int i;
         for (i = 0; i < 61; i++) {
             CDH *current = *(data.CDHTable+i);
-            CDH *prev = *(data.CSGTable+i);
+            CDH *prev = *(data.CDHTable+i);
             //start checking elements in bucket i, add to retval if appropriate.
             while(current) {
                 if (cmpCDH(*current, spec) == 0) {
                     //info match! insert to retval!
-                    prev->next=current->next;
-                    free(current);
-                    current=prev->next;
+                    CDH *deleted = current;
+
+                    if (prev == *(data.CDHTable+i)) {
+                        *(data.CDHTable+i) = current->next;
+                    } else {
+                        prev->next = current->next;
+                    }
+
+                    current = current->next;
+                    free(deleted->course);
+                    free(deleted->day);
+                    free(deleted->hour);
+                    free(deleted);
+                } else {
+                    if (current != *(data.CDHTable+i)) prev = prev->next;
+                    current = current->next;
                 }
-                current = current->next;
             }
         }
     }
@@ -923,17 +992,28 @@ void deleteCR(Database data, char ***spec) {
         if (*(data.CRTable+hashval)) {
             //something is here! build list of matches!
             CR *current = *(data.CRTable+hashval);
-            CR *prev = *(data.CSGTable+hashval);
+            CR *prev = *(data.CRTable+hashval);
 
             //check that the all information actually matches
             while(current) {
                 if (cmpCR(*current, spec) == 0) {
                     //info match! insert to retval!
-                    prev->next=current->next;
-                    free(current);
-                    current=prev->next;
+                    CR *deleted = current;
+
+                    if (prev == *(data.CRTable+hashval)) {
+                        *(data.CRTable+hashval) = current->next;
+                    } else {
+                        prev->next = current->next;
+                    }
+
+                    current = current->next;
+                    free(deleted->course);
+                    free(deleted->room);
+                    free(deleted);
+                } else {
+                    if (current != *(data.CRTable+hashval)) prev = prev->next;
+                    current = current->next;
                 }
-                current = current->next;
             }
         }
     } else {
@@ -941,16 +1021,27 @@ void deleteCR(Database data, char ***spec) {
         int i;
         for (i = 0; i < 61; i++) {
             CR *current = *(data.CRTable+i);
-            CR *prev = *(data.CSGTable+i);
+            CR *prev = *(data.CRTable+i);
             //start checking elements in bucket i, add to retval if appropriate.
             while(current) {
                 if (cmpCR(*current, spec) == 0) {
                     //info match! insert to retval!
-                    prev->next=current->next;
-                    free(current);
-                    current=prev->next;
+                    CR *deleted = current;
+
+                    if (prev == *(data.CRTable+i)) {
+                        *(data.CRTable+i) = current->next;
+                    } else {
+                        prev->next = current->next;
+                    }
+
+                    current = current->next;
+                    free(deleted->course);
+                    free(deleted->room);
+                    free(deleted);
+                } else {
+                    if (current != *(data.CRTable+i)) prev = prev->next;
+                    current = current->next;
                 }
-                current = current->next;
             }
         }
     }
