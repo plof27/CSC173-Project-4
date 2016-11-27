@@ -21,7 +21,7 @@ Database *createDatabase();
 int hashSID(int);
 int hashNotSID(char *);
 void printDB(Database);     //~write later
-void saveDBToFile(char *);  //~write later
+void saveDBToFile(Database, char *);  //~write later
 
 //inserting
 void insertToDBFromCLI(Database);   //write later~
@@ -41,12 +41,5 @@ SNAP *lookupSNAP(Database, char ***);
 CP *lookupCP(Database, char ***);
 CDH *lookupCDH(Database, char ***);
 CR *lookupCR(Database, char ***);
-
-void delete(Database, char ***, char *);
-CSG *deleteCSG(Database, char ***);
-SNAP *deleteSNAP(Database, char ***);
-CP *deleteCP(Database, char ***);
-CDH *deleteCDH(Database, char ***);
-CR *deleteCR(Database, char ***);
 
 #endif
