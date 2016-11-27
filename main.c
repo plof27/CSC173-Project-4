@@ -38,5 +38,7 @@ int main(int argc, char const *argv[]) {
         results = results->next;
     }
 
+    saveDBToFile(db, "some file.txt");
+
     return 0;
 }

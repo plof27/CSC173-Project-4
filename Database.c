@@ -54,33 +54,42 @@ void saveDBToFile(Database db, char *filename) {
         int i;
         //save CSGTable
         for (i=0; i<61; i++) {
-            if (*(db.CSGTable+i) != NULL) {
-                printf("%s\n", "Ding");
-                fprintf(fp, "CSG\t%s\t%d\t%s\n", (*(db.CSGTable+i))->course, (*(db.CSGTable+i))->SID, (*(db.CSGTable+i))->grade);
+            CSG *current = *(db.CSGTable+i);
+            while (current) {
+                fprintf(fp, "CSG\t%s\t%d\t%s\n", current->course, current->SID, current->grade);
+                current = current->next;
             }
         }
         //save SNAPTable
         for (i=0; i<61; i++) {
-            if (*(db.SNAPTable+i) != NULL) {
-                fprintf(fp, "SNAP\t%d\t%s\t%s\t%d\n", (*(db.SNAPTable+i))->SID, (*(db.SNAPTable+i))->name, (*(db.SNAPTable+i))->address, (*(db.SNAPTable+i))->phone);
+            SNAP *current = *(db.CSGTable+i);
+            while (current) {
+                fprintf(fp, "SNAP\t%d\t%s\t%s\t%d\n", current->SID, current->name, current->address, current->phone);
+                current = current->next;
             }
         }
         //save CPtable
         for (i=0; i<61; i++) {
-            if (*(db.CPTable+i) != NULL) {
-                fprintf(fp, "CP\t%s\t%s\n", (*(db.CPTable+i))->course, (*(db.CPTable+i))->prereq);
+            CP *current = *(db.CSGTable+i);
+            while (current) {
+                fprintf(fp, "CP\t%s\t%s\n", current->course, current->prereq);
+                current = current->next;
             }
         }
         //save CDHTable
         for (i=0; i<61; i++) {
-            if (*(db.CDHTable+i) != NULL) {
-                fprintf(fp, "CDH\t%s\t%s\t%s\n", (*(db.CDHTable+i))->course, (*(db.CDHTable+i))->day, (*(db.CDHTable+i))->hour);
+            CDH *current = *(db.CSGTable+i);
+            while (current) {
+                fprintf(fp, "CDH\t%s\t%s\t%s\n", current->course, current->day, current->hour);
+                current = current->next;
             }
         }
         //save CRTable
         for (i=0; i<61; i++) {
-            if (*(db.CRTable+i) != NULL) {
-                fprintf(fp, "CR\t%s\t%s\n", (*(db.CRTable+i))->course, (*(db.CRTable+i))->room);
+            CR *current = *(db.CSGTable+i);
+            while (current) {
+                fprintf(fp, "CR\t%s\t%s\n", current->course, current->room);
+                current = current->next;
             }
         }
         fclose(fp);
