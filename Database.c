@@ -1256,3 +1256,65 @@ Database *unionDB(Database data1, Database data2, char *rel) {
         printf("Unknown Relation: %s\n", rel);
     }
 }
+
+Database *differenceDB(Database data1, Database data2, char *rel) {
+    if (strcmp("CSG", rel) == 0) {
+        int i;
+        for (i = 0; i < 61; i++) {
+            CSG *current2 = *(data2.CSGTable+i);
+            //start checking elements in bucket i, delete from data1 if appropriate.
+            while(current2) {
+                char buf[6];
+                itoa(current2->SID, buf, 10);
+                deleteCSG(data1, createSpec(current2->course, buf, current2->grade, "*"));
+                current2 = current2->next;
+            }
+        }
+    } else if (strcmp("SNAP", rel) == 0) {
+        int i;
+        for (i = 0; i < 61; i++) {
+            SNAP *current2 = *(data2.SNAPTable+i);
+            //start checking elements in bucket i, delete from data1 if appropriate.
+            while(current2) {
+                char buf1[6];
+                itoa(current2->SID, buf1, 10);
+                char buf2[8];
+                itoa(current2->phone, buf2, 10);
+                deleteSNAP(data1, createSpec(buf1, current2->name, current2->address, buf2));
+                current2 = current2->next;
+            }
+        }
+    } else if (strcmp("CP", rel) == 0) {
+        int i;
+        for (i = 0; i < 61; i++) {
+            CP *current2 = *(data2.CPTable+i);
+            //start checking elements in bucket i, add to data1 if appropriate.
+            while(current2) {
+                deleteCP(data1, createSpec(current2->course, current2->prereq, "*", "*"));
+                current2 = current2->next;
+            }
+        }
+    } else if (strcmp("CDH", rel) == 0) {
+        int i;
+        for (i = 0; i < 61; i++) {
+            CDH *current2 = *(data2.CDHTable+i);
+            //start checking elements in bucket i, add to data1 if appropriate.
+            while(current2) {
+                deleteCDH(data1, createSpec(current2->course, current2->day, current2->hour, "*"));
+                current2 = current2->next;
+            }
+        }
+    } else if (strcmp("CR", rel) == 0) {
+        int i;
+        for (i = 0; i < 61; i++) {
+            CR *current2 = *(data2.CRTable+i);
+            //start checking elements in bucket i, add to data1 if appropriate.
+            while(current2) {
+                deleteCR(data1, createSpec(current2->course, current2->room, "*", "*"));
+                current2 = current2->next;
+            }
+        }
+    } else {
+        printf("Unknown Relation: %s\n", rel);
+    }
+}
