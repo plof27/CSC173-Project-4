@@ -1,5 +1,5 @@
 #include "Tuples.h"
-
+#include <string.h>
 
 CSG *createCSG(char *course, int SID, char *grade) {
     CSG *CSGP = malloc(sizeof(CSG));

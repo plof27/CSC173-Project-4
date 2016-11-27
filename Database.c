@@ -1,4 +1,7 @@
 #include "Database.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int hashSID(int SID) {
     return SID % 61;
@@ -1050,9 +1053,11 @@ char *findGrade(Database data, char *studentName, char *courseName) {
     SNAP *student = lookupSNAP(data, createSpec("*", studentName, "*", "*"));
     //~lets just assume that there are no students with the same name...
     if (student) {
-        char buf[6];
-        itoa(student->SID, buf, 10);
-        CSG *grade = lookupCSG(data, createSpec(courseName, buf, "*", "*"));
+        char buffer[6];
+
+        sprintf(buffer,"%d",student->SID);
+
+        CSG *grade = lookupCSG(data, createSpec(courseName, buffer, "*", "*"));
         if (grade) {
             return grade->grade;
         } else {
@@ -1071,7 +1076,7 @@ char *whereStudent(Database data, char *studentName, char *tim, char *day) {
         CDH *courses = lookupCDH(data, createSpec("*", day, tim, "*"));
         if (courses) {
             char buf[6];
-            itoa(student->SID, buf, 10);
+            sprintf(buf,"%d",student->SID);
             CSG *studentCourses = lookupCSG(data, createSpec("*", buf, "*", "*"));
 
             CDH *daytimeCourses = courses;
