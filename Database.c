@@ -13,6 +13,57 @@ int hashNotSID(char *course) {
     return i % 61;
 }
 
+void saveDBToFile(Database db, char *filename) {
+    FILE *fp;
+    fp = fopen(filename, "w+"); //clears the file and readys for writing (creates file if it doesn't exist)
+    if (fp == NULL) {
+        perror("Can't open file");
+    } else {
+        int i;
+        //save CSGTable
+        for (i=0; i<61; i++) {
+            CSG *current = *(db.CSGTable+i);
+            while (current) {
+                fprintf(fp, "CSG\t%s\t%d\t%s\n", current->course, current->SID, current->grade);
+                current = current->next;
+            }
+        }
+        //save SNAPTable
+        for (i=0; i<61; i++) {
+            SNAP *current = *(db.CSGTable+i);
+            while (current) {
+                fprintf(fp, "SNAP\t%d\t%s\t%s\t%d\n", current->SID, current->name, current->address, current->phone);
+                current = current->next;
+            }
+        }
+        //save CPtable
+        for (i=0; i<61; i++) {
+            CP *current = *(db.CSGTable+i);
+            while (current) {
+                fprintf(fp, "CP\t%s\t%s\n", current->course, current->prereq);
+                current = current->next;
+            }
+        }
+        //save CDHTable
+        for (i=0; i<61; i++) {
+            CDH *current = *(db.CSGTable+i);
+            while (current) {
+                fprintf(fp, "CDH\t%s\t%s\t%s\n", current->course, current->day, current->hour);
+                current = current->next;
+            }
+        }
+        //save CRTable
+        for (i=0; i<61; i++) {
+            CR *current = *(db.CSGTable+i);
+            while (current) {
+                fprintf(fp, "CR\t%s\t%s\n", current->course, current->room);
+                current = current->next;
+            }
+        }
+        fclose(fp);
+    }
+}
+
 Database *createDatabase() {
     Database *PDatabase = malloc(sizeof(Database));
 
