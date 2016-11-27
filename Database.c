@@ -30,7 +30,7 @@ void saveDBToFile(Database db, char *filename) {
         }
         //save SNAPTable
         for (i=0; i<61; i++) {
-            SNAP *current = *(db.CSGTable+i);
+            SNAP *current = *(db.SNAPTable+i);
             while (current) {
                 fprintf(fp, "SNAP\t%d\t%s\t%s\t%d\n", current->SID, current->name, current->address, current->phone);
                 current = current->next;
@@ -38,7 +38,7 @@ void saveDBToFile(Database db, char *filename) {
         }
         //save CPtable
         for (i=0; i<61; i++) {
-            CP *current = *(db.CSGTable+i);
+            CP *current = *(db.CPTable+i);
             while (current) {
                 fprintf(fp, "CP\t%s\t%s\n", current->course, current->prereq);
                 current = current->next;
@@ -46,7 +46,7 @@ void saveDBToFile(Database db, char *filename) {
         }
         //save CDHTable
         for (i=0; i<61; i++) {
-            CDH *current = *(db.CSGTable+i);
+            CDH *current = *(db.CDHTable+i);
             while (current) {
                 fprintf(fp, "CDH\t%s\t%s\t%s\n", current->course, current->day, current->hour);
                 current = current->next;
@@ -54,7 +54,7 @@ void saveDBToFile(Database db, char *filename) {
         }
         //save CRTable
         for (i=0; i<61; i++) {
-            CR *current = *(db.CSGTable+i);
+            CR *current = *(db.CRTable+i);
             while (current) {
                 fprintf(fp, "CR\t%s\t%s\n", current->course, current->room);
                 current = current->next;
