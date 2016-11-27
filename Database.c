@@ -1112,7 +1112,9 @@ Database *unionDB(Database data1, Database data2, char *rel) {
                     //stuff here! check and add!
                     int flag = 1;
                     while (current1) {
-                        if (cmpCSG(*current1, createSpec(current2->course, current2->SID, current2->grade)) == 0) {
+                        char buf[6];
+                        itoa(current2->SID, buf, 10);
+                        if (cmpCSG((*current1), createSpec(current2->course, buf, current2->grade, "*")) == 0) {
                             flag = 0;
                         }
                         current1 = current1->next;
@@ -1120,62 +1122,135 @@ Database *unionDB(Database data1, Database data2, char *rel) {
                     if (flag == 1) {
                         //not already here, add
                         CSG *temp = *(data1.CSGTable+i);
-                        *(data1.CSGTable+i) = createCSG(current2.course, current2.SID, current2.grade);
+                        *(data1.CSGTable+i) = createCSG(current2->course, current2->SID, current2->grade);
                         (*(data1.CSGTable+i))->next = temp;
                     }
                 } else {
                     //nothing here in db1! add!
-                    *(data1.CSGTable+i) = createCSG(current2.course, current2.SID, current2.grade);
+                    *(data1.CSGTable+i) = createCSG(current2->course, current2->SID, current2->grade);
                 }
                 current2 = current2->next;
             }
         }
     } else if (strcmp("SNAP", rel) == 0) {
-        SNAP *results = lookupSNAP(data, spec);
-
-        printf("%s", "Results:");
-        if (!results) printf("%s", "Nothing Found!");
-        printf("\n");
-        while(results) {
-            printf("SID: %d\n", results->SID);
-            printf("Name: %s\n", results->name);
-            printf("Address: %s\n", results->address);
-            printf("Phone: %d\n", results->phone);
-            results = results->next;
+        int i;
+        for (i = 0; i < 61; i++) {
+            SNAP *current2 = *(data2.SNAPTable+i);
+            //start checking elements in bucket i, add to data1 if appropriate.
+            while(current2) {
+                SNAP *current1 = *(data1.SNAPTable+i);
+                if (current1) {
+                    //stuff here! check and add!
+                    int flag = 1;
+                    while (current1) {
+                        char buf1[6];
+                        itoa(current2->SID, buf1, 10);
+                        char buf2[8];
+                        itoa(current2->phone, buf2, 10);
+                        if (cmpSNAP((*current1), createSpec(buf1, current2->name, current2->address, buf2)) == 0) {
+                            flag = 0;
+                        }
+                        current1 = current1->next;
+                    }
+                    if (flag == 1) {
+                        //not already here, add
+                        SNAP *temp = *(data1.SNAPTable+i);
+                        *(data1.SNAPTable+i) = createSNAP(current2->SID, current2->name, current2->address, current2->phone);
+                        (*(data1.SNAPTable+i))->next = temp;
+                    }
+                } else {
+                    //nothing here in db1! add!
+                    *(data1.SNAPTable+i) = createSNAP(current2->SID, current2->name, current2->address, current2->phone);
+                }
+                current2 = current2->next;
+            }
         }
     } else if (strcmp("CP", rel) == 0) {
-        CP *results = lookupCP(data, spec);
-
-        printf("%s", "Results:");
-        if (!results) printf("%s", "Nothing Found!");
-        printf("\n");
-        while(results) {
-            printf("Course: %s\n", results->course);
-            printf("Prerequisite: %s\n", results->prereq);
-            results = results->next;
+        int i;
+        for (i = 0; i < 61; i++) {
+            CP *current2 = *(data2.CPTable+i);
+            //start checking elements in bucket i, add to data1 if appropriate.
+            while(current2) {
+                CP *current1 = *(data1.CPTable+i);
+                if (current1) {
+                    //stuff here! check and add!
+                    int flag = 1;
+                    while (current1) {
+                        if (cmpCP((*current1), createSpec(current2->course, current2->prereq, "*", "*")) == 0) {
+                            flag = 0;
+                        }
+                        current1 = current1->next;
+                    }
+                    if (flag == 1) {
+                        //not already here, add
+                        CP *temp = *(data1.CPTable+i);
+                        *(data1.CPTable+i) = createCP(current2->course, current2->prereq);
+                        (*(data1.CPTable+i))->next = temp;
+                    }
+                } else {
+                    //nothing here in db1! add!
+                    *(data1.CPTable+i) = createCP(current2->course, current2->prereq);
+                }
+                current2 = current2->next;
+            }
         }
     } else if (strcmp("CDH", rel) == 0) {
-        CDH *results = lookupCDH(data, spec);
-
-        printf("%s", "Results:");
-        if (!results) printf("%s", "Nothing Found!");
-        printf("\n");
-        while(results) {
-            printf("Course: %s\n", results->course);
-            printf("SID: %s\n", results->day);
-            printf("Grade: %s\n", results->hour);
-            results = results->next;
+        int i;
+        for (i = 0; i < 61; i++) {
+            CDH *current2 = *(data2.CDHTable+i);
+            //start checking elements in bucket i, add to data1 if appropriate.
+            while(current2) {
+                CDH *current1 = *(data1.CDHTable+i);
+                if (current1) {
+                    //stuff here! check and add!
+                    int flag = 1;
+                    while (current1) {
+                        if (cmpCDH((*current1), createSpec(current2->course, current2->day, current2->hour, "*")) == 0) {
+                            flag = 0;
+                        }
+                        current1 = current1->next;
+                    }
+                    if (flag == 1) {
+                        //not already here, add
+                        CDH *temp = *(data1.CDHTable+i);
+                        *(data1.CDHTable+i) = createCDH(current2->course, current2->day, current2->hour);
+                        (*(data1.CDHTable+i))->next = temp;
+                    }
+                } else {
+                    //nothing here in db1! add!
+                    *(data1.CDHTable+i) = createCDH(current2->course, current2->day, current2->hour);
+                }
+                current2 = current2->next;
+            }
         }
     } else if (strcmp("CR", rel) == 0) {
-        CR *results = lookupCR(data, spec);
-
-        printf("%s", "Results:");
-        if (!results) printf("%s", "Nothing Found!");
-        printf("\n");
-        while(results) {
-            printf("Course: %s\n", results->course);
-            printf("Grade: %s\n", results->room);
-            results = results->next;
+        int i;
+        for (i = 0; i < 61; i++) {
+            CR *current2 = *(data2.CRTable+i);
+            //start checking elements in bucket i, add to data1 if appropriate.
+            while(current2) {
+                CR *current1 = *(data1.CRTable+i);
+                if (current1) {
+                    //stuff here! check and add!
+                    int flag = 1;
+                    while (current1) {
+                        if (cmpCR((*current1), createSpec(current2->course, current2->room, "*", "*")) == 0) {
+                            flag = 0;
+                        }
+                        current1 = current1->next;
+                    }
+                    if (flag == 1) {
+                        //not already here, add
+                        CR *temp = *(data1.CRTable+i);
+                        *(data1.CRTable+i) = createCR(current2->course, current2->room);
+                        (*(data1.CRTable+i))->next = temp;
+                    }
+                } else {
+                    //nothing here in db1! add!
+                    *(data1.CRTable+i) = createCR(current2->course, current2->room);
+                }
+                current2 = current2->next;
+            }
         }
     } else {
         printf("Unknown Relation: %s\n", rel);
