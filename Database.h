@@ -20,8 +20,7 @@ typedef struct {
 Database *createDatabase();
 int hashSID(int);
 int hashNotSID(char *);
-void printDB(Database);     //~write later
-void saveDBToFile(Database, char *);  //~write later
+void saveDBToFile(Database, char *);
 
 //inserting
 void insertToDBFromCLI(Database);   //write later~

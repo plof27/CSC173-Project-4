@@ -10,7 +10,7 @@ int main(int argc, char const *argv[]) {
     insertCDH(db, test);
 
     insertToDBFromFile(db, "test1.txt");
-    insertToDBFromFile(db, "test2.txt");
+    insertToDBFromFile(db, "registrar_db.txt");
 
     CSG *results = lookupCSG(db, createSpec("*", "12345", "*", "DC"));
     printf("%s", "Results:");
