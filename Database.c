@@ -1100,7 +1100,7 @@ char *whereStudent(Database data, char *studentName, char *tim, char *day) {
     }
 }
 
-Database *unionDB(Database data1, Database data2, char *rel) {
+void unionDB(Database data1, Database data2, char *rel) {
     if (strcmp("CSG", rel) == 0) {
         int i;
         for (i = 0; i < 61; i++) {
@@ -1257,7 +1257,7 @@ Database *unionDB(Database data1, Database data2, char *rel) {
     }
 }
 
-Database *intersectDB(Database data1, Database data2, char *rel) {
+void intersectDB(Database data1, Database data2, char *rel) {
     if (strcmp("CSG", rel) == 0) {
         int i;
         for (i = 0; i < 61; i++) {
@@ -1334,7 +1334,7 @@ Database *intersectDB(Database data1, Database data2, char *rel) {
     }
 }
 
-Database *differenceDB(Database data1, Database data2, char *rel) {
+void differenceDB(Database data1, Database data2, char *rel) {
     if (strcmp("CSG", rel) == 0) {
         int i;
         for (i = 0; i < 61; i++) {

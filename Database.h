@@ -54,8 +54,11 @@ char *findGrade(Database, char *, char *);    //answers the question: "What grad
 char *whereStudent(Database, char *, char *, char *);   //answers the question: "Where is 'studentName' at 'time' on 'day'?"
 
 //set operations
-Database *unionDB(Database, Database, char *);  //will union the relation 'rel' on two databases.
-Database *insersectDB(Database, Database, char *);  //will intersect "
-Database *differenceDB(Database, Database, char *); //will find the difference "
+void unionDB(Database, Database, char *);  //will union the relation 'rel' on two databases.
+void insersectDB(Database, Database, char *);  //will intersect "
+void differenceDB(Database, Database, char *); //will find the difference "
+
+//relational algebra operations
+
 
 #endif
