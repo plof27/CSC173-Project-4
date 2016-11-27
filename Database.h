@@ -53,4 +53,9 @@ void deleteCR(Database, char ***);
 char *findGrade(Database, char *, char *);    //answers the question: "What grade did 'studentName' get in 'courseName'? "
 char *whereStudent(Database, char *, char *, char *);   //answers the question: "Where is 'studentName' at 'time' on 'day'?"
 
+//set operations
+Database *unionDB(Database, Database, char *);  //will union the relation 'rel' on two databases.
+Database *insersectDB(Database, Database, char *);  //will intersect "
+Database *differenceDB(Database, Database, char *); //will find the difference "
+
 #endif

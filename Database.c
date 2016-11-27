@@ -30,7 +30,7 @@ void saveDBToFile(Database db, char *filename) {
         }
         //save SNAPTable
         for (i=0; i<61; i++) {
-            SNAP *current = *(db.SNAPTable+i);
+            SNAP *current = *(db.CSGTable+i);
             while (current) {
                 fprintf(fp, "SNAP\t%d\t%s\t%s\t%d\n", current->SID, current->name, current->address, current->phone);
                 current = current->next;
@@ -38,7 +38,7 @@ void saveDBToFile(Database db, char *filename) {
         }
         //save CPtable
         for (i=0; i<61; i++) {
-            CP *current = *(db.CPTable+i);
+            CP *current = *(db.CSGTable+i);
             while (current) {
                 fprintf(fp, "CP\t%s\t%s\n", current->course, current->prereq);
                 current = current->next;
@@ -46,7 +46,7 @@ void saveDBToFile(Database db, char *filename) {
         }
         //save CDHTable
         for (i=0; i<61; i++) {
-            CDH *current = *(db.CDHTable+i);
+            CDH *current = *(db.CSGTable+i);
             while (current) {
                 fprintf(fp, "CDH\t%s\t%s\t%s\n", current->course, current->day, current->hour);
                 current = current->next;
@@ -54,7 +54,7 @@ void saveDBToFile(Database db, char *filename) {
         }
         //save CRTable
         for (i=0; i<61; i++) {
-            CR *current = *(db.CRTable+i);
+            CR *current = *(db.CSGTable+i);
             while (current) {
                 fprintf(fp, "CR\t%s\t%s\n", current->course, current->room);
                 current = current->next;
@@ -1097,5 +1097,87 @@ char *whereStudent(Database data, char *studentName, char *tim, char *day) {
     } else {
         printf("Student: %s was not found.\n", studentName);
         return NULL;
+    }
+}
+
+Database *unionDB(Database data1, Database data2, char *rel) {
+    if (strcmp("CSG", rel) == 0) {
+        int i;
+        for (i = 0; i < 61; i++) {
+            CSG *current2 = *(data2.CSGTable+i);
+            //start checking elements in bucket i, add to data1 if appropriate.
+            while(current2) {
+                CSG *current1 = *(data1.CSGTable+i);
+                if (current1) {
+                    //stuff here! check and add!
+                    int flag = 1;
+                    while (current1) {
+                        if (cmpCSG(*current1, createSpec(current2->course, current2->SID, current2->grade)) == 0) {
+                            flag = 0;
+                        }
+                        current1 = current1->next;
+                    }
+                    if (flag == 1) {
+                        //not already here, add
+                        CSG *temp = *(data1.CSGTable+i);
+                        *(data1.CSGTable+i) = createCSG(current2.course, current2.SID, current2.grade);
+                        (*(data1.CSGTable+i))->next = temp;
+                    }
+                } else {
+                    //nothing here in db1! add!
+                    *(data1.CSGTable+i) = createCSG(current2.course, current2.SID, current2.grade);
+                }
+                current2 = current2->next;
+            }
+        }
+    } else if (strcmp("SNAP", rel) == 0) {
+        SNAP *results = lookupSNAP(data, spec);
+
+        printf("%s", "Results:");
+        if (!results) printf("%s", "Nothing Found!");
+        printf("\n");
+        while(results) {
+            printf("SID: %d\n", results->SID);
+            printf("Name: %s\n", results->name);
+            printf("Address: %s\n", results->address);
+            printf("Phone: %d\n", results->phone);
+            results = results->next;
+        }
+    } else if (strcmp("CP", rel) == 0) {
+        CP *results = lookupCP(data, spec);
+
+        printf("%s", "Results:");
+        if (!results) printf("%s", "Nothing Found!");
+        printf("\n");
+        while(results) {
+            printf("Course: %s\n", results->course);
+            printf("Prerequisite: %s\n", results->prereq);
+            results = results->next;
+        }
+    } else if (strcmp("CDH", rel) == 0) {
+        CDH *results = lookupCDH(data, spec);
+
+        printf("%s", "Results:");
+        if (!results) printf("%s", "Nothing Found!");
+        printf("\n");
+        while(results) {
+            printf("Course: %s\n", results->course);
+            printf("SID: %s\n", results->day);
+            printf("Grade: %s\n", results->hour);
+            results = results->next;
+        }
+    } else if (strcmp("CR", rel) == 0) {
+        CR *results = lookupCR(data, spec);
+
+        printf("%s", "Results:");
+        if (!results) printf("%s", "Nothing Found!");
+        printf("\n");
+        while(results) {
+            printf("Course: %s\n", results->course);
+            printf("Grade: %s\n", results->room);
+            results = results->next;
+        }
+    } else {
+        printf("Unknown Relation: %s\n", rel);
     }
 }
