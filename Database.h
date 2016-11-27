@@ -42,4 +42,11 @@ CP *lookupCP(Database, char ***);
 CDH *lookupCDH(Database, char ***);
 CR *lookupCR(Database, char ***);
 
+void delete(Database, char ***, char *);
+CSG *deleteCSG(Database, char ***);
+SNAP *deleteSNAP(Database, char ***);
+CP *deleteCP(Database, char ***);
+CDH *deleteCDH(Database, char ***);
+CR *deleteCR(Database, char ***);
+
 #endif
