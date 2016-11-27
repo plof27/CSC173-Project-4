@@ -41,11 +41,15 @@ CP *lookupCP(Database, char ***);
 CDH *lookupCDH(Database, char ***);
 CR *lookupCR(Database, char ***);
 
+//delete
 void delete(Database, char ***, char *);
 void deleteCSG(Database, char ***);
 void deleteSNAP(Database, char ***);
 void deleteCP(Database, char ***);
 void deleteCDH(Database, char ***);
 void deleteCR(Database, char ***);
+
+//more advanced queries
+char *findGrade(Database, char *, char *);    //answers the question: "What grade did 'studentName' get in 'courseName'? "
 
 #endif

@@ -1046,3 +1046,22 @@ void deleteCR(Database data, char ***spec) {
         }
     }
 }
+
+char *findGrade(Database data, char *studentName, char *courseName) {
+    SNAP *student = lookupSNAP(data, createSpec("*", studentName, "*", "*"));
+    //~lets just assume that there are no students with the same name...
+    if (student) {
+        char buf[6];
+        itoa(student->SID, buf, 10);
+        CSG *grade = lookupCSG(data, createSpec(courseName, buf, "*", "*"));
+        if (grade) {
+            return grade->grade;
+        } else {
+            printf("%s is not taking %s.\n", studentName, courseName);
+            return NULL;
+        }
+    } else {
+        printf("Student: %s was not found.\n", studentName);
+        return NULL;
+    }
+}

@@ -40,7 +40,7 @@ int main(int argc, char const *argv[]) {
 
     //saveDBToFile(db, "some file.txt");
 
-    deleteCSG(db, createSpec("CS101", "12345", "*", "DC"));
+    deleteCSG(db, createSpec("CS101", "67890", "*", "DC"));
 
     printf("%s\n", "==========DELETING============");
 
@@ -55,6 +55,8 @@ int main(int argc, char const *argv[]) {
         printf("Next: %p\n", results->next);
         results = results->next;
     }
+
+    printf("C. Brown got a %s in CS101\n", findGrade(db, "C. Brown", "CS101"));
 
     return 0;
 }
