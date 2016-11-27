@@ -51,5 +51,6 @@ void deleteCR(Database, char ***);
 
 //more advanced queries
 char *findGrade(Database, char *, char *);    //answers the question: "What grade did 'studentName' get in 'courseName'? "
+char *whereStudent(Database, char *, char *, char *);   //answers the question: "Where is 'studentName' at 'time' on 'day'?"
 
 #endif

@@ -57,6 +57,7 @@ int main(int argc, char const *argv[]) {
     }
 
     printf("C. Brown got a %s in CS101\n", findGrade(db, "C. Brown", "CS101"));
+    printf("C. Brown is in %s at 10AM on Tu\n", whereStudent(db, "C. Brown", "10AM", "Tu"));
 
     return 0;
 }

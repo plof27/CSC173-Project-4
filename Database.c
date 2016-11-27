@@ -172,8 +172,8 @@ void insertSNAP(Database data, SNAP snap) {
     if (*(data.SNAPTable+hashval)) {
         //something is here! insert!
         SNAP *temp = *(data.SNAPTable+hashval);
-        snap.next = temp;
         *(data.SNAPTable+hashval) = createSNAP(snap.SID, snap.name, snap.address, snap.phone);
+        (*(data.SNAPTable+hashval))->next = temp;
     } else {
         //empty space!
         *(data.SNAPTable+hashval) = createSNAP(snap.SID, snap.name, snap.address, snap.phone);
@@ -186,8 +186,8 @@ void insertCP(Database data, CP cp) {
     if (*(data.CPTable+hashval)) {
         //something is here! insert!
         CP *temp = *(data.CPTable+hashval);
-        cp.next = temp;
         *(data.CPTable+hashval) = createCP(cp.course, cp.prereq);
+        (*(data.CPTable+hashval))->next = temp;
     } else {
         //empty space!
         *(data.CPTable+hashval) = createCP(cp.course, cp.prereq);
@@ -200,8 +200,8 @@ void insertCDH(Database data, CDH cdh) {
     if (*(data.CDHTable+hashval)) {
         //something is here! insert!
         CDH *temp = *(data.CDHTable+hashval);
-        cdh.next = temp;
         *(data.CDHTable+hashval) = createCDH(cdh.course, cdh.day, cdh.hour);
+        (*(data.CDHTable+hashval))->next = temp;
     } else {
         //empty space!
         *(data.CDHTable+hashval) = createCDH(cdh.course, cdh.day, cdh.hour);
@@ -214,8 +214,8 @@ void insertCR(Database data, CR cr) {
     if (*(data.CRTable+hashval)) {
         //something is here! insert!
         CR *temp = *(data.CRTable+hashval);
-        cr.next = temp;
         *(data.CRTable+hashval) = createCR(cr.course, cr.room);
+        (*(data.CRTable+hashval))->next = temp;
     } else {
         //empty space!
         *(data.CRTable+hashval) = createCR(cr.course, cr.room);
@@ -605,7 +605,6 @@ CP *lookupCP(Database data, char ***spec) {
 }
 
 CDH *lookupCDH(Database data, char ***spec) {
-
     //spec is an array of memory containing pointers to strings. Ideally, spec should be formatted such that each sring is a value to be queried
     if (strcmp("*", *(*(spec+0))) != 0) {
         //an SID was given! Hash on that shit!
@@ -1058,6 +1057,41 @@ char *findGrade(Database data, char *studentName, char *courseName) {
             return grade->grade;
         } else {
             printf("%s is not taking %s.\n", studentName, courseName);
+            return NULL;
+        }
+    } else {
+        printf("Student: %s was not found.\n", studentName);
+        return NULL;
+    }
+}
+
+char *whereStudent(Database data, char *studentName, char *tim, char *day) {
+    SNAP *student = lookupSNAP(data, createSpec("*", studentName, "*", "*"));
+    if (student) {
+        CDH *courses = lookupCDH(data, createSpec("*", day, tim, "*"));
+        if (courses) {
+            char buf[6];
+            itoa(student->SID, buf, 10);
+            CSG *studentCourses = lookupCSG(data, createSpec("*", buf, "*", "*"));
+
+            CDH *daytimeCourses = courses;
+            while (studentCourses) {
+                while (daytimeCourses) {
+                    if (strcmp(studentCourses->course, daytimeCourses->course) == 0) {
+                        CR *room = lookupCR(data, createSpec(studentCourses->course, "*", "*", "*"));
+                        return room->room;
+                    }
+                    daytimeCourses = daytimeCourses->next;
+                }
+                studentCourses = studentCourses->next;
+                daytimeCourses = courses;
+            }
+
+            //will only be reached if there are not matches
+            printf("%s is not taking any courses at %s on %s\n", studentName, tim, day);
+            return NULL;
+        } else {
+            printf("No courses found at %s on %s.\n", tim, day);
             return NULL;
         }
     } else {
