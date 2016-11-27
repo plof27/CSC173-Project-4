@@ -43,10 +43,10 @@ CDH *lookupCDH(Database, char ***);
 CR *lookupCR(Database, char ***);
 
 void delete(Database, char ***, char *);
-CSG *deleteCSG(Database, char ***);
-SNAP *deleteSNAP(Database, char ***);
-CP *deleteCP(Database, char ***);
-CDH *deleteCDH(Database, char ***);
-CR *deleteCR(Database, char ***);
+void deleteCSG(Database, char ***);
+void deleteSNAP(Database, char ***);
+void deleteCP(Database, char ***);
+void deleteCDH(Database, char ***);
+void deleteCR(Database, char ***);
 
 #endif
