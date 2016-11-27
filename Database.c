@@ -45,57 +45,6 @@ Database *createDatabase() {
     return PDatabase;
 }
 
-void saveDBToFile(Database db, char *filename) {
-    FILE *fp;
-    fp = fopen(filename, "w+"); //clears the file and readys for writing (creates file if it doesn't exist)
-    if (fp == NULL) {
-        perror("Can't open file");
-    } else {
-        int i;
-        //save CSGTable
-        for (i=0; i<61; i++) {
-            CSG *current = *(db.CSGTable+i);
-            while (current) {
-                fprintf(fp, "CSG\t%s\t%d\t%s\n", current->course, current->SID, current->grade);
-                current = current->next;
-            }
-        }
-        //save SNAPTable
-        for (i=0; i<61; i++) {
-            SNAP *current = *(db.CSGTable+i);
-            while (current) {
-                fprintf(fp, "SNAP\t%d\t%s\t%s\t%d\n", current->SID, current->name, current->address, current->phone);
-                current = current->next;
-            }
-        }
-        //save CPtable
-        for (i=0; i<61; i++) {
-            CP *current = *(db.CSGTable+i);
-            while (current) {
-                fprintf(fp, "CP\t%s\t%s\n", current->course, current->prereq);
-                current = current->next;
-            }
-        }
-        //save CDHTable
-        for (i=0; i<61; i++) {
-            CDH *current = *(db.CSGTable+i);
-            while (current) {
-                fprintf(fp, "CDH\t%s\t%s\t%s\n", current->course, current->day, current->hour);
-                current = current->next;
-            }
-        }
-        //save CRTable
-        for (i=0; i<61; i++) {
-            CR *current = *(db.CSGTable+i);
-            while (current) {
-                fprintf(fp, "CR\t%s\t%s\n", current->course, current->room);
-                current = current->next;
-            }
-        }
-        fclose(fp);
-    }
-}
-
 void insertToDBFromFile(Database db, char *filename) {
     FILE *fp;
     fp = fopen(filename, "r");
@@ -694,6 +643,279 @@ CR *lookupCR(Database data, char ***spec) {
                     CR *new = createCR(current->course, current->room);
                     new->next = retval;
                     retval = new;
+                }
+                current = current->next;
+            }
+        }
+        return retval;
+    }
+}
+
+//!!!
+
+void delete(Database data, char ***spec, char *rel) {
+    if (strcmp("CSG", rel) == 0) {
+        deleteCSG(data, spec);
+    } else if (strcmp("SNAP", rel) == 0) {
+        deleteSNAP(data, spec);
+    } else if (strcmp("CP", rel) == 0) {
+        deleteCP(data, spec);
+    } else if (strcmp("CDH", rel) == 0) {
+        deleteCDH(data, spec);
+    } else if (strcmp("CR", rel) == 0) {
+        deleteCR(data, spec);
+    } else {
+        printf("Unknown Relation: %s\n", rel);
+    }
+}
+
+void *deleteCSG(Database data, char ***spec) {
+
+    //spec is an array of memory containing pointers to strings. Ideally, spec should be formatted such that each sring is a value to be queried
+    if (strcmp("*", *(*(spec+1))) != 0) {
+        //an SID was given! Hash on that shit!
+        int hashval = hashSID(atoi(**(spec+1)));
+
+        if (*(data.CSGTable+hashval)) {
+            //something is here! build list of matches!
+            CSG *prev = *(data.CSGTable+hashval);
+            CSG *current = *(data.CSGTable+hashval);
+            CSG *retval = NULL;
+
+            //check that the all information actually matches
+            while(current) {
+                if (cmpCSG(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    prev->next=current->next;
+                    free(current);
+                    current=prev->next;
+                }
+                prev=current;
+                current = current->next;
+            }
+
+            return retval;
+        } else {
+            //nothing here! return NULL!
+            return NULL;
+        }
+    } else {
+        //no SID given, iterate over table and find matches
+        CSG *retval = NULL;
+        int i;
+        for (i = 0; i < 61; i++) {
+            CSG *current = *(data.CSGTable+i);
+            CSG *prev = *(data.CSGTable+i);
+            //start checking elements in bucket i, add to retval if appropriate.
+            while(current) {
+                if (cmpCSG(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    prev->next=current->next;
+                    free(current);
+                    current=prev->next;
+                }
+                current = current->next;
+            }
+        }
+        return retval;
+    }
+}
+
+void *deleteSNAP(Database data, char ***spec) {
+
+    //spec is an array of memory containing pointers to strings. Ideally, spec should be formatted such that each sring is a value to be queried
+    if (strcmp("*", *(*(spec+1))) != 0) {
+        //an SID was given! Hash on that shit!
+        int hashval = hashNotSID(**(spec+1));
+
+        if (*(data.SNAPTable+hashval)) {
+            //something is here! build list of matches!
+            SNAP *current = *(data.SNAPTable+hashval);
+            SNAP *prev = *(data.CSGTable+i);
+            SNAP *retval = NULL;
+
+            //check that the all information actually matches
+            while(current) {
+                if (cmpSNAP(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    prev->next=current->next;
+                    free(current);
+                    current=prev->next;
+                }
+                current = current->next;
+            }
+
+            return retval;
+        } else {
+            //nothing here! return NULL!
+            return NULL;
+        }
+    } else {
+        //no SID given, iterate over table and find matches
+        SNAP *retval = NULL;
+        int i;
+        for (i = 0; i < 61; i++) {
+            SNAP *current = *(data.SNAPTable+i);
+            SNAP *prev = *(data.CSGTable+i);
+            //start checking elements in bucket i, add to retval if appropriate.
+            while(current) {
+                if (cmpSNAP(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    prev->next=current->next;
+                    free(current);
+                    current=prev->next;
+                }
+                current = current->next;
+            }
+        }
+        return retval;
+    }
+}
+
+void *deleteCP(Database data, char ***spec) {
+
+    //spec is an array of memory containing pointers to strings. Ideally, spec should be formatted such that each sring is a value to be queried
+    if (strcmp("*", *(*(spec+0))) != 0) {
+        //an SID was given! Hash on that shit!
+        int hashval = hashNotSID(**(spec+0));
+
+        if (*(data.CPTable+hashval)) {
+            //something is here! build list of matches!
+            CP *current = *(data.CPTable+hashval);
+            CP *prev = *(data.CSGTable+i);
+            CP *retval = NULL;
+
+            //check that the all information actually matches
+            while(current) {
+                if (cmpCP(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    prev->next=current->next;
+                    free(current);
+                    current=prev->next;
+                }
+                current = current->next;
+            }
+
+            return retval;
+        } else {
+            //nothing here! return NULL!
+            return NULL;
+        }
+    } else {
+        //no SID given, iterate over table and find matches
+        CP *retval = NULL;
+        int i;
+        for (i = 0; i < 61; i++) {
+            CP *current = *(data.CPTable+i);
+            CP *prev = *(data.CSGTable+i);
+            //start checking elements in bucket i, add to retval if appropriate.
+            while(current) {
+                if (cmpCP(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    prev->next=current->next;
+                    free(current);
+                    current=prev->next;
+                }
+                current = current->next;
+            }
+        }
+        return retval;
+    }
+}
+
+void *deleteCDH(Database data, char ***spec) {
+
+    //spec is an array of memory containing pointers to strings. Ideally, spec should be formatted such that each sring is a value to be queried
+    if (strcmp("*", *(*(spec+0))) != 0) {
+        //an SID was given! Hash on that shit!
+        int hashval = hashNotSID(**(spec+0));
+
+        if (*(data.CDHTable+hashval)) {
+            //something is here! build list of matches!
+            CDH *current = *(data.CDHTable+hashval);
+            CDH *prev = *(data.CSGTable+i);
+            CDH *retval = NULL;
+
+            //check that the all information actually matches
+            while(current) {
+                if (cmpCDH(*current, spec) == 0) {
+                    //info match! insert to retvavoid                    prev->next=current->next;
+                    free(current);
+                    current=prev->next;
+                }
+                current = current->next;
+            }
+
+            return retval;
+        } else {
+            //nothing here! return NULL!
+            return NULL;
+        }
+    } else {
+        //no SID given, iterate over table and find matches
+        CDH *retval = NULL;
+        int i;
+        for (i = 0; i < 61; i++) {
+            CDH *current = *(data.CDHTable+i);
+            CDH *prev = *(data.CSGTable+i);
+            //start checking elements in bucket i, add to retval if appropriate.
+            while(current) {
+                if (cmpCDH(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    prev->next=current->next;
+                    free(current);
+                    current=prev->next;
+                }
+                current = current->next;
+            }
+        }
+        return retval;
+    }
+}
+
+void *deleteCR(Database data, char ***spec) {
+
+    //spec is an array of memory containing pointers to strings. Ideally, spec should be formatted such that each sring is a value to be queried
+    if (strcmp("*", *(*(spec+0))) != 0) {
+        //an SID was given! Hash on that shit!
+        int hashval = hashNotSID(**(spec+0));
+
+        if (*(data.CRTable+hashval)) {
+            //something is here! build list of matches!
+            CR *current = *(data.CRTable+hashval);
+            CR *prev = *(data.CSGTable+i);
+            CR *retval = NULL;
+
+            //check that the all information actually matches
+            while(current) {
+                if (cmpCR(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    prev->next=current->next;
+                    free(current);
+                    current=prev->next;
+                }
+                current = current->next;
+            }
+
+            return retval;
+        } else {
+            //nothing here! return NULL!
+            return NULL;
+        }
+    } else {
+        //no SID given, iterate over table and find matches
+        CR *retval = NULL;
+        int i;
+        for (i = 0; i < 61; i++) {
+            CR *current = *(data.CRTable+i);
+            CR *prev = *(data.CSGTable+i);
+            //start checking elements in bucket i, add to retval if appropriate.
+            while(current) {
+                if (cmpCR(*current, spec) == 0) {
+                    //info match! insert to retval!
+                    prev->next=current->next;
+                    free(current);
+                    current=prev->next;
                 }
                 current = current->next;
             }
