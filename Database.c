@@ -1257,6 +1257,83 @@ Database *unionDB(Database data1, Database data2, char *rel) {
     }
 }
 
+Database *intersectDB(Database data1, Database data2, char *rel) {
+    if (strcmp("CSG", rel) == 0) {
+        int i;
+        for (i = 0; i < 61; i++) {
+            CSG *current1 = *(data1.CSGTable+i);
+            //start checking elements in bucket i, delete from data1 if appropriate.
+            while(current1) {
+                char buf[6];
+                itoa(current1->SID, buf, 10);
+                CSG *lookup = lookupCSG(data2, createSpec(current1->course, buf, current1->grade, "*"));
+                if (!lookup) {
+                    deleteCSG(data1, createSpec(current1->course, buf, current1->grade, "*"));
+                }
+                current1 = current1->next;
+            }
+        }
+    } else if (strcmp("SNAP", rel) == 0) {
+        int i;
+        for (i = 0; i < 61; i++) {
+            SNAP *current1 = *(data1.SNAPTable+i);
+            //start checking elements in bucket i, delete from data1 if appropriate.
+            while(current1) {
+                char buf1[6];
+                itoa(current1->SID, buf1, 10);
+                char buf2[8];
+                itoa(current1->phone, buf2, 10);
+                SNAP *lookup = lookupSNAP(data2, createSpec(buf1, current1->name, current1->address, buf2));
+                if (!lookup) {
+                    deleteSNAP(data1, createSpec(buf1, current1->name, current1->address, buf2));
+                }
+                current1 = current1->next;
+            }
+        }
+    } else if (strcmp("CP", rel) == 0) {
+        int i;
+        for (i = 0; i < 61; i++) {
+            CP *current1 = *(data1.CPTable+i);
+            //start checking elements in bucket i, add to data1 if appropriate.
+            while(current1) {
+                CP *lookup = lookupCP(data2, createSpec(current1->course, current1->prereq, "*", "*"));
+                if (!lookup) {
+                    deleteCP(data1, createSpec(current1->course, current1->prereq, "*", "*"));
+                }
+                current1 = current1->next;
+            }
+        }
+    } else if (strcmp("CDH", rel) == 0) {
+        int i;
+        for (i = 0; i < 61; i++) {
+            CDH *current1 = *(data1.CDHTable+i);
+            //start checking elements in bucket i, add to data1 if appropriate.
+            while(current1) {
+                CDH *lookup = lookupCDH(data2, createSpec(current1->course, current1->day, current1->hour, "*"));
+                if (!lookup) {
+                    deleteCDH(data1, createSpec(current1->course, current1->day, current1->hour, "*"));
+                }
+                current1 = current1->next;
+            }
+        }
+    } else if (strcmp("CR", rel) == 0) {
+        int i;
+        for (i = 0; i < 61; i++) {
+            CR *current1 = *(data1.CRTable+i);
+            //start checking elements in bucket i, add to data1 if appropriate.
+            while(current1) {
+                CR *lookup = lookupCR(data2, createSpec(current1->course, current1->room, "*", "*"));
+                if (!lookup) {
+                    deleteCR(data1, createSpec(current1->course, current1->room, "*", "*"));
+                }
+                current1 = current1->next;
+            }
+        }
+    } else {
+        printf("Unknown Relation: %s\n", rel);
+    }
+}
+
 Database *differenceDB(Database data1, Database data2, char *rel) {
     if (strcmp("CSG", rel) == 0) {
         int i;
