@@ -59,6 +59,12 @@ void insersectDB(Database, Database, char *);  //will intersect "
 void differenceDB(Database, Database, char *); //will find the difference "
 
 //relational algebra operations
-
+//selection is already implemented in the 'lookup' functions
+void projectCSG(CSG *, char *);
+void projectSNAP(SNAP *, char *);
+void projectCP(CP *, char *);
+void projectCDH(CDH *, char *);
+void projectCR(CR *, char *);
+void joinDB(Database, char *, char *);
 
 #endif
