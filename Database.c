@@ -766,6 +766,8 @@ void deleteCSG(Database data, char ***spec) {
                     //info match! insert to retval!
                     CSG *deleted = current;
 
+                    if (prev == *(data.CSGTable+i)) {
+                        *(data.CSGTable+i) = current->next;
                     } else {
                         prev->next = current->next;;
                     }
@@ -775,6 +777,7 @@ void deleteCSG(Database data, char ***spec) {
                     free(deleted->grade);
                     free(deleted);
                 } else {
+                    if (current != *(data.CSGTable+i)) prev = prev->next;
                     current = current->next;
                 }
             }
