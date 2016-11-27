@@ -38,7 +38,23 @@ int main(int argc, char const *argv[]) {
         results = results->next;
     }
 
-    saveDBToFile(db, "some file.txt");
+    //saveDBToFile(db, "some file.txt");
+
+    deleteCSG(db, createSpec("CS101", "12345", "*", "DC"));
+
+    printf("%s\n", "==========DELETING============");
+
+    results = lookupCSG(db, createSpec("CS101", "*", "*", "DC"));
+    printf("%s", "Results:");
+    if (!results) printf("%s", "Nothing Found!");
+    printf("\n");
+    while(results) {
+        printf("Course: %s\n", results->course);
+        printf("SID: %d\n", results->SID);
+        printf("Grade: %s\n", results->grade);
+        printf("Next: %p\n", results->next);
+        results = results->next;
+    }
 
     return 0;
 }

@@ -736,12 +736,22 @@ void deleteCSG(Database data, char ***spec) {
             while(current) {
                 if (cmpCSG(*current, spec) == 0) {
                     //info match! insert to retval!
-                    prev->next=current->next;
-                    free(current);
-                    current=prev->next;
+                    CSG *deleted = current;
+
+                    if (prev == *(data.CSGTable+hashval)) {
+                        *(data.CSGTable+hashval) = current->next;
+                    } else {
+                        prev->next = current->next;;
+                    }
+
+                    current = current->next;
+                    free(deleted->course);
+                    free(deleted->grade);
+                    free(deleted);
+                } else {
+                    if (current != *(data.CSGTable+hashval)) prev = prev->next;
+                    current = current->next;
                 }
-                prev=current;
-                current = current->next;
             }
         }
     } else {
@@ -754,11 +764,19 @@ void deleteCSG(Database data, char ***spec) {
             while(current) {
                 if (cmpCSG(*current, spec) == 0) {
                     //info match! insert to retval!
-                    prev->next=current->next;
-                    free(current);
-                    current=prev->next;
+                    CSG *deleted = current;
+
+                    } else {
+                        prev->next = current->next;;
+                    }
+
+                    current = current->next;
+                    free(deleted->course);
+                    free(deleted->grade);
+                    free(deleted);
+                } else {
+                    current = current->next;
                 }
-                current = current->next;
             }
         }
     }
