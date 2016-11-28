@@ -1400,3 +1400,109 @@ void differenceDB(Database data1, Database data2, char *rel) {
         printf("Unknown Relation: %s\n", rel);
     }
 }
+
+void projectCSG(CSG *csg, char *attr) {
+    //projects all values from the CSG LL onto the attribute attr
+    printf("%s:\n", attr);
+    if (strcmp("course", attr) == 0) {
+        while(csg) {
+            printf("%s\n", csg->course);
+            csg = csg->next;
+        }
+    } else if (strcmp("SID", attr) == 0) {
+        while(csg) {
+            printf("%d\n", csg->SID);
+            csg = csg->next;
+        }
+    } else if (strcmp("grade", attr) == 0) {
+        while(csg) {
+            printf("%s\n", csg->grade);
+            csg = csg->next;
+        }
+    } else {
+        printf("Unknown attribute: %s\n", attr);
+    }
+}
+
+void projectSNAP(SNAP *snap, char *attr) {
+    printf("%s:\n", attr);
+    if (strcmp("SID", attr) == 0) {
+        while(snap) {
+            printf("%d\n", snap->SID);
+            snap = snap->next;
+        }
+    } else if (strcmp("name", attr) == 0) {
+        while(snap) {
+            printf("%s\n", snap->name);
+            snap = snap->next;
+        }
+    } else if (strcmp("address", attr) == 0) {
+        while(snap) {
+            printf("%s\n", snap->address);
+            snap = snap->next;
+        }
+    } else if (strcmp("phone", attr) == 0) {
+        while(snap) {
+            printf("%d\n", snap->phone);
+            snap = snap->next;
+        }
+    } else {
+        printf("Unknown attribute: %s\n", attr);
+    }
+}
+
+void projectCP(CP *cp, char *attr) {
+    printf("%s:\n", attr);
+    if (strcmp("course", attr) == 0) {
+        while(cp) {
+            printf("%s\n", cp->course);
+            cp = cp->next;
+        }
+    } else if (strcmp("prereq", attr) == 0) {
+        while(cp) {
+            printf("%s\n", cp->prereq);
+            cp = cp->next;
+        }
+    } else {
+        printf("Unknown attribute: %s\n", attr);
+    }
+}
+
+void projectCDH(CDH *cdh, char *attr) {
+    printf("%s:\n", attr);
+    if (strcmp("course", attr) == 0) {
+        while(cdh) {
+            printf("%s\n", cdh->course);
+            cdh = cdh->next;
+        }
+    } else if (strcmp("day", attr) == 0) {
+        while(cdh) {
+            printf("%s\n", cdh->day);
+            cdh = cdh->next;
+        }
+    } else if (strcmp("hour", attr) == 0) {
+        while(cdh) {
+            printf("%s\n", cdh->hour);
+            cdh = cdh->next;
+        }
+    } else {
+        printf("Unknown attribute: %s\n", attr);
+    }
+}
+
+void projectCR(CR *cr, char *attr) {
+    printf("%s:\n", attr);
+    if (strcmp("course", attr) == 0) {
+        while(cr) {
+            printf("%s\n", cr->course);
+            cr = cr->next;
+        }
+    } else if (strcmp("grade", attr) == 0) {
+        while(cr) {
+            printf("%s\n", cr->room);
+            cr = cr->next;
+        }
+    } else {
+        printf("Unknown attribute: %s\n", attr);
+    }
+}

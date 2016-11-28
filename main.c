@@ -25,7 +25,7 @@ int main(int argc, char const *argv[]) {
 
     printf("%s\n", "==================================");
 
-    //lookup test 2
+    //lookup test 2 - example 8.12 from FOCS (note: our database has more elements in it than the 'registrar' database in FOCS. As such, more results will be fetched. All results will meet the specification.)
     results = lookupCSG(db, createSpec("CS101", "*", "*", "DC"));
     printf("%s", "Results:");
     if (!results) printf("%s", "Nothing Found!");
@@ -110,6 +110,11 @@ int main(int argc, char const *argv[]) {
         printf("Next: %p\n", results->next);
         results = results->next;
     }
+
+    //projection test - example 8.13 from FOCS
+    printf("%s\n", "==========PROJECTION============");
+    insertToDBFromFile(db, "registrar_db.txt");
+    projectCSG(lookupCSG(db, createSpec("CS101", "*", "*", "*")), "SID");
 
     return 0;
 }
