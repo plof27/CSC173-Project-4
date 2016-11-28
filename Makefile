@@ -5,7 +5,7 @@ CFLAGS = -g
 all: proj4
 
 proj4: main.o Database.o Tuples.o
-	$(CC) $(CFLAGS) -o proj4 main.o Database.o Tuples.o
+	$(CC) $(CFLAGS) -o proj4 main.o Tuples.o Database.o
 	
 main.o: main.c
 	$(CC) $(CFLAGS) -c main.c
