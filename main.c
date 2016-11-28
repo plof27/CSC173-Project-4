@@ -45,7 +45,7 @@ int main(int argc, char const *argv[]) {
     //file saving test
     printf("%s\n", "============SAVING==============");
     printf("%s\n", "Saving current database to \"some file.txt\"");
-    //saveDBToFile(db, "some file.txt");
+    saveDBToFile(db, "some file.txt");
 
     //delete test
     printf("%s\n", "==========DELETING============");
