@@ -1506,3 +1506,26 @@ void projectCR(CR *cr, char *attr) {
         printf("Unknown attribute: %s\n", attr);
     }
 }
+
+void joinDB(Database data) {
+    //joins the CR and CDH relations where course == course
+    //this function is not very general, but it does what is asked
+    //a more general function could be written, so assume without loss of generality
+
+    int i;
+    for (i = 0; i < 61; i++) {
+        CR *current = *(data.CRTable+i);
+        //start checking elements in bucket i, add to data1 if appropriate.
+        while(current) {
+            CDH *results = lookupCDH(data, createSpec(current->course, "*", "*", "*"));
+            while (results) {
+                printf("Course: %s\n", results->course);
+                printf("Day: %s\n", results->day);
+                printf("Hour: %s\n", results->hour);
+                printf("Room: %s\n", current->room);
+                results = results->next;
+            }
+            current = current->next;
+        }
+    }
+}

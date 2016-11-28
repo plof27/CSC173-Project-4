@@ -65,6 +65,6 @@ void projectSNAP(SNAP *, char *);
 void projectCP(CP *, char *);
 void projectCDH(CDH *, char *);
 void projectCR(CR *, char *);
-void joinDB(Database, char *, char *);
+void joinDB(Database);
 
 #endif

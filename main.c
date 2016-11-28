@@ -113,8 +113,13 @@ int main(int argc, char const *argv[]) {
 
     //projection test - example 8.13 from FOCS
     printf("%s\n", "==========PROJECTION============");
-    insertToDBFromFile(db, "registrar_db.txt");
-    projectCSG(lookupCSG(db, createSpec("CS101", "*", "*", "*")), "SID");
+    Database registrar = *createDatabase(); //re-created to ensure that all data is correct (union, insersect, and join can do weird things...)
+    insertToDBFromFile(registrar, "registrar_db.txt");
+    projectCSG(lookupCSG(registrar, createSpec("CS101", "*", "*", "*")), "SID");
+
+    //join test - example 8.14 from FOCS
+    printf("%s\n", "==========JOIN============");
+    joinDB(registrar);
 
     return 0;
 }
